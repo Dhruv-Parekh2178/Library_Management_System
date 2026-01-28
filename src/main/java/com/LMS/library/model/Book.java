@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +24,8 @@ public class Book {
 
     @Column(name = "book_name")
     @JsonProperty("book_name")
+    @NotNull(message = "User name can't be null")
+    @Size(min = 2 , max = 30, message = "User name is between lenght 2 to 30.")
     private String name;
 
     @ManyToMany
@@ -42,6 +46,7 @@ public class Book {
     private List<Category> categories;
 
     @ManyToOne
+    @JoinColumn(name = "publisher_id")
     @JsonBackReference("publisher-book")
     private Publisher publisher;
 

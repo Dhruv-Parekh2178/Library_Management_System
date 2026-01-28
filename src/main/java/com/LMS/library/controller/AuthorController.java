@@ -1,5 +1,6 @@
 package com.LMS.library.controller;
 
+import com.LMS.library.model.ApiResponse;
 import com.LMS.library.model.Author;
 import com.LMS.library.service.AuthorService;
 import lombok.RequiredArgsConstructor;
@@ -20,33 +21,33 @@ public class AuthorController {
 
 
     @GetMapping("/author/getAll")
-    public ResponseEntity<List<Author>> getAllAuthors(){
+    public ResponseEntity<ApiResponse<List<Author>>> getAllAuthors(){
         List<Author> authors = authorService.getAuthors();
-         return new ResponseEntity<>(authors , HttpStatus.OK);
+         return ResponseEntity.ok(new ApiResponse<>(true , "success" , authors));
     }
 
     @GetMapping("/author/get/{id}")
-    public ResponseEntity<Author> getAuthorById(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<Author>> getAuthorById(@PathVariable Long id){
         Author author = authorService.getAuthorById(id);
         if(author==null)
-            return ResponseEntity.notFound().build();
-        return new ResponseEntity<>(author , HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.ok(new ApiResponse<>(true, "success" , author));
     }
 
     @PostMapping("/author/add")
-    public ResponseEntity<String> addAuthor(@RequestBody Author author){
-        Author savedAuthor = authorService.saveAuthor(author);
-        return new ResponseEntity<>("Author added successfully." , HttpStatus.CREATED);
+    public ResponseEntity<ApiResponse<String>> addAuthor(@RequestBody Author author){
+        authorService.saveAuthor(author);
+        return ResponseEntity.ok(new ApiResponse<>(true,"success","Author added successfully."));
     }
 
     @PostMapping("/author/put/{id}")
-    public ResponseEntity<String> updateAuthor(@RequestBody Author author , @PathVariable Long id){
+    public ResponseEntity<ApiResponse<String>> updateAuthor(@RequestBody Author author , @PathVariable Long id){
         Author savedAuthor = authorService.getAuthorById(id);
         if(savedAuthor == null){
-            return new ResponseEntity<>("Author with id " + id + " is not found." , HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok(new ApiResponse<>(false, "fail","Author with id " + id + " is not found." ));
         }
         authorService.updateAuthor(author , id);
-        return new ResponseEntity<>("Author with id " + id + " updated successfully." , HttpStatus.OK);
+        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Author with id " + id + " updated successfully."));
     }
 
     @PostMapping("/author/delete/{id}")

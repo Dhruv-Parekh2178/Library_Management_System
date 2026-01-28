@@ -3,6 +3,8 @@ package com.LMS.library.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,8 @@ public class Publisher {
 
     @Column(name = "publisher_name")
     @JsonProperty("publisher_name")
+    @NotNull(message = "User name can't be null")
+    @Size(min = 2 , max = 30, message = "User name is between lenght 2 to 30.")
     private String name;
 
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL , orphanRemoval = true)
