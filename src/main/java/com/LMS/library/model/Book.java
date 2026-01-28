@@ -5,11 +5,13 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "book")
@@ -27,7 +29,7 @@ public class Book {
             joinColumns = {@JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn (name = "authors_id")}
     )
-    @JsonBackReference
+    @JsonBackReference("author-book")
     private List<Author> authors;
 
     @ManyToMany
@@ -36,14 +38,14 @@ public class Book {
             joinColumns = {@JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id")}
     )
-    @JsonBackReference
+    @JsonBackReference("category-book")
     private List<Category> categories;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference("publisher-book")
     private Publisher publisher;
 
     @ManyToMany(mappedBy = "books", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JsonManagedReference
+    @JsonManagedReference("book-user")
     private List<User> users;
 }

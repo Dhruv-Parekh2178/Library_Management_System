@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "publisher")
@@ -22,7 +24,7 @@ public class Publisher {
     private String name;
 
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL , orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("publisher-book")
     private List<Book> books;
 
 }

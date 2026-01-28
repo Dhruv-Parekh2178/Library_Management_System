@@ -17,11 +17,11 @@ import java.util.List;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer AuthorId;
+    private Long Id;
     @Column(name = "author_name")
     @JsonProperty("author_name")
     private String AuthorName;
     @ManyToMany(mappedBy = "authors", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JsonManagedReference
+    @JsonManagedReference("author-book")
     private List<Book> books;
 }

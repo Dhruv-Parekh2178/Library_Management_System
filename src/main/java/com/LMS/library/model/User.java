@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "library_user")
@@ -26,6 +28,6 @@ public class User {
             joinColumns = {@JoinColumn (name= "user_id")},
             inverseJoinColumns = {@JoinColumn (name= "book_id")}
     )
-    @JsonBackReference
+    @JsonBackReference("book-user")
     private List<Book> books;
 }
