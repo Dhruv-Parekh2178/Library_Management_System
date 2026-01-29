@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+//@Controller
 @RequestMapping("/library")
 @RequiredArgsConstructor
 public class AuthorController {
@@ -31,7 +32,7 @@ public class AuthorController {
     public ResponseEntity<ApiResponse<Author>> getAuthorById(@PathVariable Long id){
         Author author = authorService.getAuthorById(id);
         if(author==null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false ,"fail" , null));
         return ResponseEntity.ok(new ApiResponse<>(true, "success" , author));
     }
 
@@ -45,20 +46,20 @@ public class AuthorController {
     public ResponseEntity<ApiResponse<String>> updateAuthor(@RequestBody Author author , @PathVariable Long id){
         Author savedAuthor = authorService.getAuthorById(id);
         if(savedAuthor == null){
-            return ResponseEntity.ok(new ApiResponse<>(false, "fail","Author with id " + id + " is not found." ));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","Author with id " + id + " is not found." ));
         }
         authorService.updateAuthor(author , id);
         return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Author with id " + id + " updated successfully."));
     }
 
     @PostMapping("/author/delete/{id}")
-    public ResponseEntity<String> DeleteAuthor(@PathVariable Long id){
-        Author savedAuthor = authorService.getAuthorById(id);
-        if(savedAuthor == null){
-            return new ResponseEntity<>("Author with id " + id + " is not found." , HttpStatus.NOT_FOUND);
-        }
-        authorService.deleteAuthor(id);
-        return new ResponseEntity<>("Author with id " + id + " deleted successfully." , HttpStatus.OK);
+    public ResponseEntity<ApiResponse<String>> DeleteAuthor(@PathVariable Long id){
+            Author savedAuthor = authorService.getAuthorById(id);
+            if(savedAuthor == null){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","Author with id " + id + " is not found." ));
+            }
+            authorService.deleteAuthor(id);
+        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Author with id " + id + " deleted successfully."));
     }
 
 }

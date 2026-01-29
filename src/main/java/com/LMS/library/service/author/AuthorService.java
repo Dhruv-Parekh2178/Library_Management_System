@@ -4,7 +4,7 @@ import com.LMS.library.model.Author;
 
 import java.util.List;
 
-public interface AuthorService {
+    public interface AuthorService {
     List<Author> getAuthors();
 
     Author getAuthorById(Long id);
