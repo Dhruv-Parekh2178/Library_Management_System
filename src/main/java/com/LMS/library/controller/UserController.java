@@ -40,26 +40,26 @@ public class UserController {
     @PostMapping("/user/add")
     public ResponseEntity<ApiResponse<String>> addAuthor(@RequestBody User user){
         userService.saveUser(user);
-        return ResponseEntity.ok(new ApiResponse<>(true,"success","Author added successfully."));
+        return ResponseEntity.ok(new ApiResponse<>(true,"success","User added successfully."));
     }
 
-    @PostMapping("/author/put/{id}")
+    @PostMapping("/user/put/{id}")
     public ResponseEntity<ApiResponse<String>> updateAuthor(@RequestBody User user , @PathVariable Long id){
         User savedUser = userService.getUserById(id);
         if(savedUser == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","Author with id " + id + " is not found." ));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","User with id " + id + " is not found." ));
         }
         userService.updateUser(user , id);
-        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Author with id " + id + " updated successfully."));
+        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"User with id " + id + " updated successfully."));
     }
 
-    @PostMapping("/author/delete/{id}")
+    @PostMapping("/user/delete/{id}")
     public ResponseEntity<ApiResponse<String>> DeleteAuthor(@PathVariable Long id){
         User savedUser = userService.getUserById(id);
         if(savedUser == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","Author with id " + id + " is not found." ));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","User with id " + id + " is not found." ));
         }
         userService.deleteUser(id);
-        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Author with id " + id + " deleted successfully."));
+        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"user with id " + id + " deleted successfully."));
     }
 }

@@ -36,27 +36,27 @@ public class CategoryController {
     @PostMapping("/category/add")
     public ResponseEntity<ApiResponse<String>> addCategory(@RequestBody Category category){
         categoryService.saveCategory(category);
-        return ResponseEntity.ok(new ApiResponse<>(true,"success","Author added successfully."));
+        return ResponseEntity.ok(new ApiResponse<>(true,"success","Category added successfully."));
     }
 
     @PostMapping("/category/put/{id}")
     public ResponseEntity<ApiResponse<String>> updateCategory(@RequestBody Category category , @PathVariable Long id){
         Category savedCategory = categoryService.getCategoryById(id);
         if(savedCategory == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","Author with id " + id + " is not found." ));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","Category with id " + id + " is not found." ));
         }
         categoryService.updateCategory(category , id);
-        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Author with id " + id + " updated successfully."));
+        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Category with id " + id + " updated successfully."));
     }
 
     @PostMapping("/category/delete/{id}")
     public ResponseEntity<ApiResponse<String>> DeleteAuthor(@PathVariable Long id){
         Category savedCategory = categoryService.getCategoryById(id);
         if(savedCategory == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","Author with id " + id + " is not found." ));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","Category with id " + id + " is not found." ));
         }
         categoryService.deleteCategory(id);
-        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Author with id " + id + " deleted successfully."));
+        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Category with id " + id + " deleted successfully."));
     }
 }
 
