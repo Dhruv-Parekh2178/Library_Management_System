@@ -1,4 +1,4 @@
-package com.LMS.library.service;
+package com.LMS.library.service.author;
 
 import com.LMS.library.model.Author;
 

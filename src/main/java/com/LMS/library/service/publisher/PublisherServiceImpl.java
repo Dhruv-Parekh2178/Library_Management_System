@@ -1,6 +1,5 @@
-package com.LMS.library.service.impl;
+package com.LMS.library.service.publisher;
 
-import com.LMS.library.service.PublisherService;
 import org.springframework.stereotype.Service;
 
 @Service

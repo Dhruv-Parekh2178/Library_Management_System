@@ -1,6 +1,5 @@
-package com.LMS.library.service.impl;
+package com.LMS.library.service.book;
 
-import com.LMS.library.service.BookService;
 import org.springframework.stereotype.Service;
 
 @Service
