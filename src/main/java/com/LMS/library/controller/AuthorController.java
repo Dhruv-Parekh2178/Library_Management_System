@@ -2,9 +2,10 @@ package com.LMS.library.controller;
 
 import com.LMS.library.model.ApiResponse;
 import com.LMS.library.model.Author;
-import com.LMS.library.service.AuthorService;
+import com.LMS.library.service.author.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,9 +17,24 @@ import java.util.List;
 @RequestMapping("/library")
 @RequiredArgsConstructor
 public class AuthorController {
+
+    @Value("${app.version}")
+    String appVersion;
     @Autowired
     private AuthorService authorService;
 
+    @GetMapping
+    public String indexPage(){
+
+
+        return "Index";
+    }
+
+    @GetMapping("/version")
+    @ResponseBody
+    public String getAppVersion(){
+        return appVersion;
+    }
 
     @GetMapping("/author/getAll")
     public ResponseEntity<ApiResponse<List<Author>>> getAllAuthors(){

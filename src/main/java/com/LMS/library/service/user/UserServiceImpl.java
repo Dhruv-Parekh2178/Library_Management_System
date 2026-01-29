@@ -1,6 +1,5 @@
-package com.LMS.library.service.impl;
+package com.LMS.library.service.user;
 
-import com.LMS.library.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service

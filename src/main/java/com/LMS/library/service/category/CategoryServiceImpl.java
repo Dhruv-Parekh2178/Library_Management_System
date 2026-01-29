@@ -1,6 +1,5 @@
-package com.LMS.library.service.impl;
+package com.LMS.library.service.category;
 
-import com.LMS.library.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 @Service

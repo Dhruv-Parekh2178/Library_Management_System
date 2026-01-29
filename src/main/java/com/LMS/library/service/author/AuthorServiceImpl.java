@@ -1,23 +1,20 @@
-package com.LMS.library.service.impl;
+package com.LMS.library.service.author;
 
 import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Author;
 import com.LMS.library.model.Book;
 import com.LMS.library.repository.AuthorRepository;
-import com.LMS.library.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
     @Autowired
-    private AuthorRepository authorRepository;
+    private final AuthorRepository authorRepository;
     @Override
     public List<Author> getAuthors() {
         return authorRepository.findAll();
@@ -30,13 +27,13 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author saveAuthor(Author author) {
+    public void saveAuthor(Author author) {
         if (author.getBooks() != null) {
             for (Book book : author.getBooks()) {
                 book.setAuthors(List.of(author));
             }
         }
-        return authorRepository.save(author);
+        authorRepository.save(author);
     }
 
     @Override

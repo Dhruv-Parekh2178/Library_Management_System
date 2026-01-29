@@ -1,4 +1,4 @@
-package com.LMS.library.service;
+package com.LMS.library.service.author;
 
 import com.LMS.library.model.Author;
 
@@ -9,7 +9,7 @@ public interface AuthorService {
 
     Author getAuthorById(Long id);
 
-    Author saveAuthor(Author author);
+    void saveAuthor(Author author);
 
     void updateAuthor(Author author, Long id);
 
