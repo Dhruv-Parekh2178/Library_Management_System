@@ -53,7 +53,7 @@ public class AuthorController {
     }
 
     @PostMapping("/author/delete/{id}")
-    public ResponseEntity<ApiResponse<String>> DeleteAuthor(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<String>> deleteAuthor(@PathVariable Long id){
             Author savedAuthor = authorService.getAuthorById(id);
             if(savedAuthor == null){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","Author with id " + id + " is not found." ));

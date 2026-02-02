@@ -1,12 +1,9 @@
 package com.LMS.library.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,7 +31,7 @@ public class Author {
     @Min(value = 18,message = "Author minimum age should be 18 years.")
     @Column(name = "age" ,columnDefinition = "INTEGER DEFAULT 0")
     @JsonProperty("age")
-    private Integer age;
+    private int age;
 
     @Column(name = "is_deleted", nullable = false)
     @JsonProperty("is_deleted")

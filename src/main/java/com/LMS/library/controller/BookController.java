@@ -27,7 +27,7 @@ public class BookController {
 
 
 
-    @GetMapping("/book/get")
+    @GetMapping("/book/getAll")
     public ResponseEntity<ApiResponse<List<Book>>> getAllBooks(){
         List<Book> books = bookService.getbooks();
         return ResponseEntity.ok(new ApiResponse<>(true,"success" , books));
