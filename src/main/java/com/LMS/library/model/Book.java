@@ -10,10 +10,11 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 
 import java.util.List;
-
+@ToString(exclude = "authors")
 @Entity
 @Data
 @NoArgsConstructor
@@ -59,4 +60,13 @@ public class Book {
     @ManyToMany(mappedBy = "books", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JsonIgnoreProperties("books")
     private List<User> users;
+
+    @Transient
+    private String authorIdsJson;
+
+    @Transient
+    private String categoryIdsJson;
+
+    @Transient
+    private String userIdsJson;
 }

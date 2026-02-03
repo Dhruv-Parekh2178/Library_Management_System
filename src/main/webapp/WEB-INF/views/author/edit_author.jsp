@@ -21,7 +21,8 @@
     <label>Book IDs (comma separated)</label><br>
     <input type="text"
            id="bookIdsInput"
-           placeholder="e.g. 1,2,5,7"><br><br>
+           placeholder="e.g. 1,2,5,7"
+        ><br><br>
 
 
     <input type="hidden" name="bookIdsJson" id="bookIdsJson">
@@ -31,6 +32,7 @@
 
 <br>
 <a href="${pageContext.request.contextPath}/author">Back</a>
+<a href="${pageContext.request.contextPath}">Go Home</a>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </body>
 </html>

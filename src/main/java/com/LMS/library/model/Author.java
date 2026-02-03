@@ -9,10 +9,12 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 
 import java.util.List;
 
+@ToString(exclude = "books")
 @Entity
 @Data
 @NoArgsConstructor

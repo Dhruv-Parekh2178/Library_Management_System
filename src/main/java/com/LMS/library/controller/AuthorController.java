@@ -26,7 +26,7 @@ public class AuthorController {
     public String getAllAuthors(Model model){
         List<Author> authors = authorService.getAuthors();
         model.addAttribute("authors",authors);
-        return "author_list";
+        return "author/author_list";
     }
 
     @GetMapping("/get/{id}")
@@ -36,18 +36,18 @@ public class AuthorController {
             return "redirect:/author";
 
         model.addAttribute("author",author);
-        return "author_by_id";
+        return "author/author_by_id";
     }
 
     @GetMapping("/add")
     public String showAddAuthorForm(Model model) {
         model.addAttribute("author", new Author());
-        return "author_form";
+        return "author/author_form";
     }
 
 
     @PostMapping("/add")
-    public String addAuthor(@ModelAttribute Author author  ){
+    public String addAuthor(@ModelAttribute Author author){
         List<Long> bookIds = List.of();
 
         try {
@@ -74,7 +74,7 @@ public class AuthorController {
     public String showEditForm(@PathVariable Long id, Model model) {
         Author author = authorService.getAuthorById(id);
         model.addAttribute("author", author);
-        return "edit_author";
+        return "author/edit_author";
     }
 
 

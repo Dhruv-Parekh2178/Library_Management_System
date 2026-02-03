@@ -13,7 +13,7 @@
     <button>Manage Authors</button>
 </a>
 
-<a href="${pageContext.request.contextPath}/books">
+<a href="${pageContext.request.contextPath}/book">
     <button>Manage Books</button>
 </a>
 

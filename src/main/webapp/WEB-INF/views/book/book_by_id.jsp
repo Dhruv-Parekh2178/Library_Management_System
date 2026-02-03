@@ -1,0 +1,55 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book</title>
+
+</head>
+<body>
+
+<h2>Book Details</h2>
+
+
+
+            <div> <strong id="a_id">Id:</strong> ${book.id}<br></div>
+            <strong>Name:</strong> ${book.name}<br>
+
+<strong>publisher:</strong> ${book.publisher.name}<br>
+
+            <p><strong>Authors:</strong></p>
+            <ul>
+                <c:forEach items="${book.authors}" var="author">
+                    <li>${author.name}</li>
+                </c:forEach>
+            </ul>
+
+<p><strong>Categories:</strong></p>
+<ul>
+    <c:forEach items="${book.categories}" var="category">
+        <li>${category.name}</li>
+    </c:forEach>
+</ul>
+
+<p><strong>Users:</strong></p>
+<ul>
+    <c:forEach items="${book.users}" var="user">
+        <li>${user.name}</li>
+    </c:forEach>
+</ul>
+
+            <div class="actions">
+                <a href="${pageContext.request.contextPath}/book/put/${book.id}">Edit</a>
+
+                <form action="${pageContext.request.contextPath}/book/delete/${book.id}" method="get">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+<a href="${pageContext.request.contextPath}/book">Back</a>
+<a href="${pageContext.request.contextPath}">Go Home</a>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</body>
+</html>

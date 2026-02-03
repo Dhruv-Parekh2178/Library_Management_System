@@ -1,16 +1,17 @@
 
 
 $(document).ready(function () {
-    $("#bookIdsInput").on("input", function () {
+    $("#categoryIdsInput").on("input", function () {
         const input = $(this).val();
 
-        const bookIds = input
+        const categoryIds = input
             .split(",")
             .map(id => id.trim())
             .filter(id => id !== "" && !isNaN(id))
             .map(Number);
 
-        $("#bookIdsJson").val(JSON.stringify(bookIds));
+        $("#categoryIdsJson").val(JSON.stringify(categoryIds));
+        return true;
     });
 });
 

@@ -9,9 +9,9 @@ public interface AuthorService {
 
     Author getAuthorById(Long id);
 
-    Author saveAuthor(Author author);
+//    Author saveAuthor(Author author);
 
-    void updateAuthor(Author author, Long id);
+//    void updateAuthor(Author author, Long id);
 
     void deleteAuthor(Long id);
 

@@ -34,46 +34,46 @@ public class AuthorServiceImpl implements AuthorService {
                 .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuhtorId" , id));
     }
 
-    @Override
-    public Author saveAuthor(Author author) {
+//    @Override
+//    public Author saveAuthor(Author author) {
+//
+//        if (author.getBooks() != null) {
+//            List<Book> managedBooks = new ArrayList<>();
+//            for (Book book : author.getBooks()) {
+//                Book managedBook = bookRepository.findBooksById(book.getId())
+//                        .orElseThrow(()-> new ResourceNotFoundException("Book"  , "bookId" , book.getId()));
+//                managedBooks.add(managedBook);
+//            }
+//            author.setBooks(managedBooks);
+//        }
+//        return authorRepository.save(author);
+//    }
 
-        if (author.getBooks() != null) {
-            List<Book> managedBooks = new ArrayList<>();
-            for (Book book : author.getBooks()) {
-                Book managedBook = bookRepository.findBooksById(book.getId())
-                        .orElseThrow(()-> new ResourceNotFoundException("Book"  , "bookId" , book.getId()));
-                managedBooks.add(managedBook);
-            }
-            author.setBooks(managedBooks);
-        }
-        return authorRepository.save(author);
-    }
-
-    @Override
-    @Transactional
-    public void updateAuthor(Author author, Long id) {
-
-        Author savedAuthor = authorRepository.findAuthorById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Author", "AuthorId", id));
-
-
-        savedAuthor.setName(author.getName());
-        savedAuthor.setAge(author.getAge());
-        savedAuthor.setDeleted(author.isDeleted());
-
-        if (author.getBooks() != null) {
-            List<Book> managedBooks = new ArrayList<>();
-            for (Book book : author.getBooks()) {
-                Book managedBook = bookRepository.findBooksById(book.getId())
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException("Book", "bookId", book.getId()));
-                managedBooks.add(managedBook);
-            }
-            savedAuthor.setBooks(managedBooks);
-        }
-
-        authorRepository.save(savedAuthor);
-    }
+//    @Override
+//    @Transactional
+//    public void updateAuthor(Author author, Long id) {
+//
+//        Author savedAuthor = authorRepository.findAuthorById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("Author", "AuthorId", id));
+//
+//
+//        savedAuthor.setName(author.getName());
+//        savedAuthor.setAge(author.getAge());
+//        savedAuthor.setDeleted(author.isDeleted());
+//
+//        if (author.getBooks() != null) {
+//            List<Book> managedBooks = new ArrayList<>();
+//            for (Book book : author.getBooks()) {
+//                Book managedBook = bookRepository.findBooksById(book.getId())
+//                        .orElseThrow(() ->
+//                                new ResourceNotFoundException("Book", "bookId", book.getId()));
+//                managedBooks.add(managedBook);
+//            }
+//            savedAuthor.setBooks(managedBooks);
+//        }
+//
+//        authorRepository.save(savedAuthor);
+//    }
 
 
     @Override
@@ -86,6 +86,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Transactional
     public void saveAuthorWithBooks(Author author, List<Long> bookIds) {
         List<Book> books = bookRepository.findAllById(bookIds);
         if (books.size() != bookIds.size()) {
@@ -98,6 +99,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Transactional
     public void updateAuthorWithBooks(Author author, List<Long> bookIds , Long id) {
         Author savedAuthor = authorRepository.findAuthorById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Author", "AuthorId", id));
