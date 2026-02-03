@@ -1,0 +1,36 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+
+<html>
+<head>
+    <title>Edit Author</title>
+</head>
+<body>
+
+<h2>Edit Author</h2>
+
+<form action="${pageContext.request.contextPath}/author/put/${author.id}"
+      method="post"
+   onsubmit="prepareBooksJson()">
+
+    <label>Name</label><br>
+    <input type="text" name="name" value="${author.name}" required><br><br>
+
+    <label>Age</label><br>
+    <input type="number" name="age" value="${author.age}" required><br><br>
+
+    <label>Book IDs (comma separated)</label><br>
+    <input type="text"
+           id="bookIdsInput"
+           placeholder="e.g. 1,2,5,7"><br><br>
+
+
+    <input type="hidden" name="bookIdsJson" id="bookIdsJson">
+
+    <button type="submit">Update</button>
+</form>
+
+<br>
+<a href="${pageContext.request.contextPath}/author">Back</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</body>
+</html>

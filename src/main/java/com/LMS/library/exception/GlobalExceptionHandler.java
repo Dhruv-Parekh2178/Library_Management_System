@@ -1,8 +1,8 @@
 package com.LMS.library.exception;
 
-import com.LMS.library.model.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<Map<String, String>>> handleMethodArgsExp(MethodArgumentNotValidException ex) {
+    public String handleMethodArgsExp(MethodArgumentNotValidException ex , Model model) {
         Map<String, String> response = new HashMap<>();
 
         ex.getBindingResult().getAllErrors()
@@ -33,19 +33,27 @@ public class GlobalExceptionHandler {
                 });
 
 
-        return ResponseEntity.badRequest().body(new ApiResponse<>(false, "fail", response));
+        model.addAttribute("errorMessage", response.toString());
+        return "error_ex";
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiResponse<String>> myResourseNotFound(ResourceNotFoundException ex) {
-        String message = ex.getMessage();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail", message));
+    public String myResourseNotFound(ResourceNotFoundException ex , Model model) {
+        model.addAttribute("errorMessage", ex.getMessage());
+        return "error_404";
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public String handleRuntimeException(RuntimeException ex , Model model) {
+        model.addAttribute("errorMessage", ex.getMessage());
+        return "error_ex";
+
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<String>> handleGenericException(Exception ex) {
-        String message = ex.getMessage();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse<>(false, "fail", message));
+    public String handleGenericException(Exception ex , Model model) {
+        model.addAttribute("errorMessage", ex.getMessage());
+        return "error_ex";
 
     }
 }

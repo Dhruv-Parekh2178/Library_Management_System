@@ -4,10 +4,13 @@ import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Author;
 import com.LMS.library.model.Book;
 import com.LMS.library.repository.AuthorRepository;
+import com.LMS.library.repository.BookRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,44 +18,101 @@ import java.util.List;
 public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private final AuthorRepository authorRepository;
+    @Autowired
+    private  final BookRepository bookRepository;
+
     @Override
     public List<Author> getAuthors() {
-        return authorRepository.findAll();
+        List<Author> authors = authorRepository.findAll().stream()
+                .filter(author -> !author.isDeleted()).toList();
+        return authors;
     }
 
     @Override
     public Author getAuthorById(Long id){
-        return authorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Author not found with id: " + id));
+        return authorRepository.findAuthorById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuhtorId" , id));
     }
 
     @Override
-    public void saveAuthor(Author author) {
+    public Author saveAuthor(Author author) {
+
         if (author.getBooks() != null) {
+            List<Book> managedBooks = new ArrayList<>();
             for (Book book : author.getBooks()) {
-                book.setAuthors(List.of(author));
+                Book managedBook = bookRepository.findBooksById(book.getId())
+                        .orElseThrow(()-> new ResourceNotFoundException("Book"  , "bookId" , book.getId()));
+                managedBooks.add(managedBook);
             }
+            author.setBooks(managedBooks);
         }
+        return authorRepository.save(author);
+    }
+
+    @Override
+    @Transactional
+    public void updateAuthor(Author author, Long id) {
+
+        Author savedAuthor = authorRepository.findAuthorById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Author", "AuthorId", id));
+
+
+        savedAuthor.setName(author.getName());
+        savedAuthor.setAge(author.getAge());
+        savedAuthor.setDeleted(author.isDeleted());
+
+        if (author.getBooks() != null) {
+            List<Book> managedBooks = new ArrayList<>();
+            for (Book book : author.getBooks()) {
+                Book managedBook = bookRepository.findBooksById(book.getId())
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException("Book", "bookId", book.getId()));
+                managedBooks.add(managedBook);
+            }
+            savedAuthor.setBooks(managedBooks);
+        }
+
+        authorRepository.save(savedAuthor);
+    }
+
+
+    @Override
+    public void deleteAuthor(Long id) {
+        Author savedAuthor = authorRepository.findAuthorById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuthorId" , id));
+
+        savedAuthor.setDeleted(true);
+        authorRepository.save(savedAuthor);
+    }
+
+    @Override
+    public void saveAuthorWithBooks(Author author, List<Long> bookIds) {
+        List<Book> books = bookRepository.findAllById(bookIds);
+        if (books.size() != bookIds.size()) {
+            throw new RuntimeException("One or more Book IDs are invalid");
+        }
+
+        author.setBooks(books);
+
         authorRepository.save(author);
     }
 
     @Override
-    public void updateAuthor(Author author, Long id) {
-      Author savedAuthor = authorRepository.findById(id)
-                                           .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuthorId" , id));
-      author.setId(savedAuthor.getId());
-        if (author.getBooks() != null) {
-            for (Book book : author.getBooks()) {
-                book.setAuthors(List.of(author));
-            }
-        }
-      authorRepository.save(author);
-    }
+    public void updateAuthorWithBooks(Author author, List<Long> bookIds , Long id) {
+        Author savedAuthor = authorRepository.findAuthorById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Author", "AuthorId", id));
 
-    @Override
-    public void deleteAuthor(Long id) {
-        Author savedAuthor = authorRepository.findById(id)
-                                             .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuthorId" , id));
-        authorRepository.delete(savedAuthor);
+
+        savedAuthor.setName(author.getName());
+        savedAuthor.setAge(author.getAge());
+        savedAuthor.setDeleted(author.isDeleted());
+        List<Book> books = bookRepository.findAllById(bookIds);
+        if (books.size() != bookIds.size()) {
+            throw new RuntimeException("One or more Book IDs are invalid");
+        }
+
+        savedAuthor.setBooks(books);
+
+        authorRepository.save(savedAuthor);
     }
 }

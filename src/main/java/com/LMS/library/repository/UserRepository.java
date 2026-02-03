@@ -1,10 +1,13 @@
 package com.LMS.library.repository;
 
+import com.LMS.library.model.Category;
 import com.LMS.library.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserRepository extends JpaRepository<User,Integer> {
+import java.util.Optional;
 
+@Repository
+public interface UserRepository extends JpaRepository<User,Long> {
+    Optional<User> findUserById(Long id);
 }

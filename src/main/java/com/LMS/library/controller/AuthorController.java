@@ -1,79 +1,112 @@
 package com.LMS.library.controller;
 
-import com.LMS.library.model.ApiResponse;
 import com.LMS.library.model.Author;
 import com.LMS.library.service.author.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
+
 @Controller
-@RequestMapping("/library")
+@RequestMapping("/author")
 @RequiredArgsConstructor
 public class AuthorController {
 
-    @Value("${app.version}")
-    String appVersion;
+
     @Autowired
-    private AuthorService authorService;
+    private final AuthorService authorService;
 
     @GetMapping
-    public String indexPage(){
-
-
-        return "Index";
-    }
-
-    @GetMapping("/version")
-    @ResponseBody
-    public String getAppVersion(){
-        return appVersion;
-    }
-
-    @GetMapping("/author/getAll")
-    public ResponseEntity<ApiResponse<List<Author>>> getAllAuthors(){
+    public String getAllAuthors(Model model){
         List<Author> authors = authorService.getAuthors();
-         return ResponseEntity.ok(new ApiResponse<>(true , "success" , authors));
+        model.addAttribute("authors",authors);
+        return "author_list";
     }
 
-    @GetMapping("/author/get/{id}")
-    public ResponseEntity<ApiResponse<Author>> getAuthorById(@PathVariable Long id){
+    @GetMapping("/get/{id}")
+    public String getAuthorById(@PathVariable Long id , Model model){
         Author author = authorService.getAuthorById(id);
         if(author==null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.ok(new ApiResponse<>(true, "success" , author));
+            return "redirect:/author";
+
+        model.addAttribute("author",author);
+        return "author_by_id";
     }
 
-    @PostMapping("/author/add")
-    public ResponseEntity<ApiResponse<String>> addAuthor(@RequestBody Author author){
-        authorService.saveAuthor(author);
-        return ResponseEntity.ok(new ApiResponse<>(true,"success","Author added successfully."));
+    @GetMapping("/add")
+    public String showAddAuthorForm(Model model) {
+        model.addAttribute("author", new Author());
+        return "author_form";
     }
 
-    @PostMapping("/author/put/{id}")
-    public ResponseEntity<ApiResponse<String>> updateAuthor(@RequestBody Author author , @PathVariable Long id){
-        Author savedAuthor = authorService.getAuthorById(id);
-        if(savedAuthor == null){
-            return ResponseEntity.ok(new ApiResponse<>(false, "fail","Author with id " + id + " is not found." ));
+
+    @PostMapping("/add")
+    public String addAuthor(@ModelAttribute Author author  ){
+        List<Long> bookIds = List.of();
+
+        try {
+            if (author.getBookIdsJson() != null &&
+                    !author.getBookIdsJson().isBlank()) {
+
+                ObjectMapper mapper = new ObjectMapper();
+                bookIds = mapper.readValue(
+                        author.getBookIdsJson(),
+                        new TypeReference<List<Long>>() {}
+                );
+            }
+
+            authorService.saveAuthorWithBooks(author, bookIds);
+
+        } catch (Exception e) {
+            System.out.println( e.getMessage());
+            e.printStackTrace();
         }
-        authorService.updateAuthor(author , id);
-        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Author with id " + id + " updated successfully."));
+        return "redirect:/author";
     }
 
-    @PostMapping("/author/delete/{id}")
-    public ResponseEntity<String> DeleteAuthor(@PathVariable Long id){
-        Author savedAuthor = authorService.getAuthorById(id);
-        if(savedAuthor == null){
-            return new ResponseEntity<>("Author with id " + id + " is not found." , HttpStatus.NOT_FOUND);
+    @GetMapping("/put/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        Author author = authorService.getAuthorById(id);
+        model.addAttribute("author", author);
+        return "edit_author";
+    }
+
+
+    @PostMapping("/put/{id}")
+    public String updateAuthor(@ModelAttribute Author author, @PathVariable Long id) {
+        List<Long> bookIds = List.of();
+
+        try {
+            if (author.getBookIdsJson() != null &&
+                    !author.getBookIdsJson().isBlank()) {
+
+                ObjectMapper mapper = new ObjectMapper();
+                bookIds = mapper.readValue(
+                        author.getBookIdsJson(),
+                        new TypeReference<List<Long>>() {
+                        }
+                );
+            }
+
+            authorService.updateAuthorWithBooks(author, bookIds , id);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
+        return "redirect:/author";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteAuthor(@PathVariable Long id) {
         authorService.deleteAuthor(id);
-        return new ResponseEntity<>("Author with id " + id + " deleted successfully." , HttpStatus.OK);
+        return "redirect:/author";
     }
 
 }
