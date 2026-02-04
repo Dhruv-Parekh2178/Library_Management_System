@@ -25,7 +25,9 @@ public class  CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getCategories() {
-        return categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll().stream()
+                .filter(category -> !category.isDeleted()).toList();
+        return categories;
     }
 
     @Override
@@ -35,49 +37,42 @@ public class  CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void saveCategory(Category category) {
-        if (category.getBooks() != null) {
-            List<Book> managedBooks = new ArrayList<>();
-            for (Book book : category.getBooks()) {
-                Book managedBook = bookRepository.findBooksById(book.getId())
-                        .orElseThrow(()-> new ResourceNotFoundException("Book"  , "bookId" , book.getId()));
-                managedBooks.add(managedBook);
-            }
-            category.setBooks(managedBooks);
+    public void deleteCategory(Long id) {
+        Category savedCategory = categoryRepository.findCategoryById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category" , "CateegoryId" , id));
+
+        savedCategory.setDeleted(true);
+        categoryRepository.save(savedCategory);
+    }
+
+    @Override
+    public void saveCategoryWithBooks(Category category, List<Long> bookIds) {
+        List<Book> books = bookRepository.findAllById(bookIds);
+        if (books.size() != bookIds.size()) {
+            throw new RuntimeException("One or more Book IDs are invalid");
         }
+
+        category.setBooks(books);
+
         categoryRepository.save(category);
     }
-    @Transactional
+
     @Override
-    public void updateCategory(Category category, Long id) {
+    public void updateCaregoryWithBooks(Category category, List<Long> bookIds, Long id) {
         Category savedCategory = categoryRepository.findCategoryById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Author", "AuthorId", id));
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "CatgoryId", id));
 
 
         savedCategory.setName(category.getName());
 
         savedCategory.setDeleted(category.isDeleted());
-
-        if (category.getBooks() != null) {
-            List<Book> managedBooks = new ArrayList<>();
-            for (Book book : category.getBooks()) {
-                Book managedBook = bookRepository.findBooksById(book.getId())
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException("Book", "bookId", book.getId()));
-                managedBooks.add(managedBook);
-            }
-            savedCategory.setBooks(managedBooks);
+        List<Book> books = bookRepository.findAllById(bookIds);
+        if (books.size() != bookIds.size()) {
+            throw new RuntimeException("One or more Book IDs are invalid");
         }
 
-        categoryRepository.save(savedCategory);
-    }
+        savedCategory.setBooks(books);
 
-    @Override
-    public void deleteCategory(Long id) {
-        Category savedCategory = categoryRepository.findCategoryById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuthorId" , id));
-
-        savedCategory.setDeleted(true);
         categoryRepository.save(savedCategory);
     }
 }

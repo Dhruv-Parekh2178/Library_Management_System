@@ -36,4 +36,6 @@ public class Category {
     @JsonIgnoreProperties("categories")
     private List<Book> books;
 
+    @Transient
+    private String bookIdsJson;
 }

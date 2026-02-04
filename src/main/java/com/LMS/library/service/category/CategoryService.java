@@ -10,9 +10,13 @@ public interface CategoryService {
 
     Category getCategoryById(Long id);
 
-    void saveCategory(Category category);
-
-    void updateCategory(Category category, Long id);
+//    void saveCategory(Category category);
+//
+//    void updateCategory(Category category, Long id);
 
     void deleteCategory(Long id);
+
+    void saveCategoryWithBooks(Category category, List<Long> bookIds);
+
+    void updateCaregoryWithBooks(Category category, List<Long> bookIds, Long id);
 }

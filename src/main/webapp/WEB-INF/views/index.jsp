@@ -17,11 +17,11 @@
     <button>Manage Books</button>
 </a>
 
-<a href="${pageContext.request.contextPath}/category/">
+<a href="${pageContext.request.contextPath}/category">
     <button>Manage Categories</button>
 </a>
 
-<a href="${pageContext.request.contextPath}/publisher/">
+<a href="${pageContext.request.contextPath}/publisher">
     <button>Manage Publisher</button>
 </a>
 
