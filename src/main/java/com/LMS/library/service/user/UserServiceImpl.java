@@ -25,7 +25,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsers() {
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll().stream()
+                .filter(user -> !user.isDeleted()).toList();
+        return users;
     }
 
     @Override
@@ -34,43 +36,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(()-> new ResourceNotFoundException("User" ,"UserId" , id));
     }
 
-    @Override
-    public void saveUser(User user) {
-        if (user.getBooks() != null) {
-            List<Book> managedBooks = new ArrayList<>();
-            for (Book book : user.getBooks()) {
-                Book managedBook = bookRepository.findBooksById(book.getId())
-                        .orElseThrow(()-> new ResourceNotFoundException("Book"  , "bookId" , book.getId()));
-                managedBooks.add(managedBook);
-            }
-            user.setBooks(managedBooks);
-        }
-        userRepository.save(user);
-    }
-    @Transactional
-    @Override
-    public void updateUser(User user, Long id) {
-        User savedUser = userRepository.findUserById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "UserId", id));
-
-
-        savedUser.setName(user.getName());
-
-        savedUser.setDeleted(user.isDeleted());
-
-        if (user.getBooks() != null) {
-            List<Book> managedBooks = new ArrayList<>();
-            for (Book book : user.getBooks()) {
-                Book managedBook = bookRepository.findBooksById(book.getId())
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException("Book", "bookId", book.getId()));
-                managedBooks.add(managedBook);
-            }
-            savedUser.setBooks(managedBooks);
-        }
-
-        userRepository.save(savedUser);
-    }
 
     @Override
     public void deleteUser(Long id) {
@@ -79,5 +44,36 @@ public class UserServiceImpl implements UserService {
 
         savedUser.setDeleted(true);
         userRepository.save(savedUser);
+    }
+
+    @Override
+    public void updateUserWithBooks(User user, List<Long> bookIds, Long id) {
+        User savedUser = userRepository.findUserById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "UserId", id));
+
+
+        savedUser.setName(user.getName());
+        savedUser.setAge(user.getAge());
+        savedUser.setDeleted(user.isDeleted());
+        List<Book> books = bookRepository.findAllById(bookIds);
+        if (books.size() != bookIds.size()) {
+            throw new RuntimeException("One or more Book IDs are invalid");
+        }
+
+        savedUser.setBooks(books);
+
+        userRepository.save(savedUser);
+    }
+
+    @Override
+    public void saveUserWithBooks(User user, List<Long> bookIds) {
+        List<Book> books = bookRepository.findAllById(bookIds);
+        if (books.size() != bookIds.size()) {
+            throw new RuntimeException("One or more Book IDs are invalid");
+        }
+
+        user.setBooks(books);
+
+        userRepository.save(user);
     }
 }

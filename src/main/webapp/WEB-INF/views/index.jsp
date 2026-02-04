@@ -25,7 +25,7 @@
     <button>Manage Publisher</button>
 </a>
 
-<a href="${pageContext.request.contextPath}/user/">
+<a href="${pageContext.request.contextPath}/user">
     <button>Manage Users</button>
 </a>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

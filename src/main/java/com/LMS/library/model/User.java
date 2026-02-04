@@ -46,4 +46,8 @@ public class User {
     )
     @JsonIgnoreProperties("user")
     private List<Book> books;
+
+
+    @Transient
+    private String bookIdsJson;
 }
