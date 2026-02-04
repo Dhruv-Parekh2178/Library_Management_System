@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Where;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
+@Where(clause = "is_deleted = false")
 @Table(name = "publisher")
 public class Publisher {
     @Id
@@ -26,13 +28,13 @@ public class Publisher {
 
     @Column(name = "publisher_name", columnDefinition = "TEXT DEFAULT ''")
     @JsonProperty("publisher_name")
-//    @NotNull(message = "Publisher name can't be null")
+
     @Size(min = 2 , max = 30, message = "Publisher name is between lenght 2 to 30.")
     private String name;
     @Column(name = "is_deleted", nullable = false)
     @JsonProperty("is_deleted")
     private boolean deleted = false;
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL , orphanRemoval = true)
+    @OneToMany(mappedBy = "publisher", orphanRemoval = true)
     @JsonIgnoreProperties("publisher")
     private List<Book> books;
 

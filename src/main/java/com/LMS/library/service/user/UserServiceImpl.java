@@ -47,33 +47,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updateUserWithBooks(User user, List<Long> bookIds, Long id) {
-        User savedUser = userRepository.findUserById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "UserId", id));
-
+        User savedUser = getUserById(id);
 
         savedUser.setName(user.getName());
         savedUser.setAge(user.getAge());
-        savedUser.setDeleted(user.isDeleted());
-        List<Book> books = bookRepository.findAllById(bookIds);
-        if (books.size() != bookIds.size()) {
+        if (savedUser.getBooks() != null) {
+            for (Book book : savedUser.getBooks()) {
+                book.getUsers().remove(savedUser);
+            }
+
+            savedUser.getBooks().clear();
+        }
+
+        List<Book> newBooks = bookRepository.findAllById(bookIds);
+        if (newBooks.size() != bookIds.size()) {
             throw new RuntimeException("One or more Book IDs are invalid");
         }
 
-        savedUser.setBooks(books);
-
-        userRepository.save(savedUser);
+        for (Book book : newBooks) {
+            savedUser.getBooks().add(book);
+            book.getUsers().add(savedUser);
+        }
     }
 
     @Override
+    @Transactional
     public void saveUserWithBooks(User user, List<Long> bookIds) {
+
         List<Book> books = bookRepository.findAllById(bookIds);
         if (books.size() != bookIds.size()) {
             throw new RuntimeException("One or more Book IDs are invalid");
         }
 
-        user.setBooks(books);
-
         userRepository.save(user);
+        for (Book book : books) {
+            user.getBooks().add(book);
+            book.getUsers().add(user);
+        }
     }
 }

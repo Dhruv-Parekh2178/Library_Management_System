@@ -47,33 +47,40 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
+    @Transactional
     public void savePublisherWithBooks(Publisher publisher, List<Long> bookIds) {
         List<Book> books = bookRepository.findAllById(bookIds);
         if (books.size() != bookIds.size()) {
             throw new RuntimeException("One or more Book IDs are invalid");
         }
 
-        publisher.setBooks(books);
-
         publisherRepository.save(publisher);
+
+
+        for (Book book : books) {
+            book.setPublisher(publisher);
+        }
     }
 
     @Override
+    @Transactional
     public void updatePublisherWithBooks(Publisher publisher, List<Long> bookIds, Long id) {
-        Publisher savedPublisher = publisherRepository.findPublisherById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Category", "CatgoryId", id));
-
-
+        Publisher savedPublisher = getPublisherById(id);
         savedPublisher.setName(publisher.getName());
 
-        savedPublisher.setDeleted(publisher.isDeleted());
-        List<Book> books = bookRepository.findAllById(bookIds);
-        if (books.size() != bookIds.size()) {
+        if (savedPublisher.getBooks() != null) {
+            for (Book book : savedPublisher.getBooks()) {
+                book.setPublisher(null);
+            }
+        }
+
+        List<Book> newBooks = bookRepository.findAllById(bookIds);
+        if (newBooks.size() != bookIds.size()) {
             throw new RuntimeException("One or more Book IDs are invalid");
         }
 
-        savedPublisher.setBooks(books);
-
-        publisherRepository.save(savedPublisher);
+        for (Book book : newBooks) {
+            book.setPublisher(savedPublisher);
+        }
     }
 }

@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
-
+import org.hibernate.annotations.Where;
 import java.util.List;
 
 @ToString(exclude = "books")
@@ -20,31 +20,31 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
+@Where(clause = "is_deleted = false")
 @Table(name = "author")
 public class Author {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "author_name" , columnDefinition = "TEXT DEFAULT ''")
-    @JsonProperty("author_name")
-//    @NotNull(message = "Author name can't be null")
-    @Size(min = 2 , max = 30, message = "Author name is between lenght 2 to 30.")
+
+    @Column(name = "author_name", columnDefinition = "TEXT DEFAULT ''")
+    @Size(min = 2, max = 30, message = "Author name length must be 2 to 30.")
     private String name;
 
-    @Min(value = 18,message = "Author minimum age should be 18 years.")
-    @Column(name = "age" ,columnDefinition = "INTEGER DEFAULT 0")
-    @JsonProperty("age")
-    private int age;
+    @Min(value = 18, message = "Author minimum age should be 18 years.")
+    @Column(name = "age", columnDefinition = "INTEGER DEFAULT 0")
+    private Integer age;
 
     @Column(name = "is_deleted", nullable = false)
-    @JsonProperty("is_deleted")
     private boolean deleted = false;
 
-    @ManyToMany(mappedBy = "authors", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(mappedBy = "authors")
     @JsonIgnoreProperties("authors")
     private List<Book> books;
 
     @Transient
     private String bookIdsJson;
-
 }
+
+

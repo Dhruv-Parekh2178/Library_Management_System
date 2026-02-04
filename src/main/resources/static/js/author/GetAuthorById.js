@@ -1,7 +1,11 @@
 $(document).ready(function (){
-      $(".card").click(function (){
+
+      $(".card").click(function (e){
+      if ($(e.target).closest(".delete_btn").length) {
+            return;
+      }
       const id = $(this).data("id");
 
-      window.location.href = `${contextPath}/author/get/${id}`;
+      window.location = `${contextPath}/author/get/${id}`;
       })
 });

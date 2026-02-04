@@ -27,7 +27,7 @@
             <div class="actions">
                 <a href="${pageContext.request.contextPath}/publisher/put/${publisher.id}">Edit</a>
 
-                <form action="${pageContext.request.contextPath}/publisher/delete/${publisher.id}" method="get">
+                <form class="delete_btn" data-id=${publisher.id} >
                     <button type="submit">Delete</button>
                 </form>
             </div>
@@ -39,6 +39,7 @@
 <script>
     const contextPath = "${pageContext.request.contextPath}";
 </script>
+<script src="${pageContext.request.contextPath}/js/publisher/deletePublisherById.js"></script>
 <script src="${pageContext.request.contextPath}/js/publisher/GetPublisherById.js"></script>
 </body>
 </html>

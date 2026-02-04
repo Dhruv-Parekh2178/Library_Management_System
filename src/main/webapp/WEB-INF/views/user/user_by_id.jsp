@@ -27,7 +27,7 @@
             <div class="actions">
                 <a href="${pageContext.request.contextPath}/user/put/${user.id}">Edit</a>
 
-                <form action="${pageContext.request.contextPath}/user/delete/${user.id}" method="get">
+                <form class="delete_btn" data-id=${user.id} >
                     <button type="submit">Delete</button>
                 </form>
             </div>
@@ -37,6 +37,9 @@
 <a href="${pageContext.request.contextPath}">Go Home</a>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+<script>
+    const contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath}/js/user/deleteUserById.js"></script>
 </body>
 </html>

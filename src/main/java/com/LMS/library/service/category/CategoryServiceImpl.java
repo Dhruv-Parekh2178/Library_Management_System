@@ -46,33 +46,39 @@ public class  CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public void saveCategoryWithBooks(Category category, List<Long> bookIds) {
         List<Book> books = bookRepository.findAllById(bookIds);
         if (books.size() != bookIds.size()) {
             throw new RuntimeException("One or more Book IDs are invalid");
         }
 
-        category.setBooks(books);
-
         categoryRepository.save(category);
+
+
+        for (Book book : books) {
+            book.getCategories().add(category);
+        }
     }
 
     @Override
     public void updateCaregoryWithBooks(Category category, List<Long> bookIds, Long id) {
-        Category savedCategory = categoryRepository.findCategoryById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Category", "CatgoryId", id));
-
-
+        Category savedCategory = getCategoryById(id);
         savedCategory.setName(category.getName());
 
-        savedCategory.setDeleted(category.isDeleted());
-        List<Book> books = bookRepository.findAllById(bookIds);
-        if (books.size() != bookIds.size()) {
+        if (savedCategory.getBooks() != null) {
+            for (Book book : savedCategory.getBooks()) {
+                book.getCategories().remove(savedCategory);
+            }
+        }
+
+        List<Book> newBooks = bookRepository.findAllById(bookIds);
+        if (newBooks.size() != bookIds.size()) {
             throw new RuntimeException("One or more Book IDs are invalid");
         }
 
-        savedCategory.setBooks(books);
-
-        categoryRepository.save(savedCategory);
+        for (Book book : newBooks) {
+            book.getCategories().add(savedCategory);
+        }
     }
 }

@@ -12,52 +12,56 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Where;
 
 import java.util.List;
-@ToString(exclude = "authors")
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
+@Where(clause = "is_deleted = false")
 @Table(name = "book")
+@ToString(exclude = {"authors", "categories", "users"})
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "book_name", columnDefinition = "TEXT DEFAULT ''")
-    @JsonProperty("book_name")
-//    @NotNull(message = "Book name can't be null")
-    @Size(min = 2 , max = 30, message = "Book name is between lenght 2 to 30.")
+    @Size(min = 2, max = 30)
     private String name;
 
     @Column(name = "is_deleted", nullable = false)
-    @JsonProperty("is_deleted")
     private boolean deleted = false;
 
     @ManyToMany
-    @JoinTable(name = "books_authors",
-            joinColumns = {@JoinColumn(name = "book_id")},
-            inverseJoinColumns = {@JoinColumn (name = "authors_id")}
+    @JoinTable(
+            name = "books_authors",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "authors_id")
     )
     @JsonIgnoreProperties("books")
     private List<Author> authors;
 
+
     @ManyToMany
     @JoinTable(
             name = "books_categories",
-            joinColumns = {@JoinColumn(name = "book_id")},
-            inverseJoinColumns = {@JoinColumn(name = "category_id")}
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     @JsonIgnoreProperties("books")
     private List<Category> categories;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+
+    @ManyToOne
     @JsonIgnoreProperties("books")
     private Publisher publisher;
 
-    @ManyToMany(mappedBy = "books", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+
+    @ManyToMany(mappedBy = "books")
     @JsonIgnoreProperties("books")
     private List<User> users;
 

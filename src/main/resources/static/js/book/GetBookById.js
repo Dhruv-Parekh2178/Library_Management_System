@@ -1,7 +1,10 @@
 $(document).ready(function (){
-      $(".card").click(function (){
+      $(".card").click(function (e){
+            if ($(e.target).closest(".delete_btn").length) {
+                  return;
+            }
       const id = $(this).data("id");
-      console.log("BookId :" , id);
-      window.location.href = `${contextPath}/book/get/${id}`;
+
+      window.location = `${contextPath}/book/get/${id}`;
       })
 });

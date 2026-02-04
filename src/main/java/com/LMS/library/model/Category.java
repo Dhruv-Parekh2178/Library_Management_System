@@ -10,29 +10,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Where;
 
 import java.util.List;
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
+@Where(clause = "is_deleted = false")
 @Table(name = "category")
 public class Category {
+
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (name = "category_name" , columnDefinition = "TEXT DEFAULT ''")
-    @JsonProperty("category_name")
-//     @NotNull(message = "Category name can't be null")
-    @Size(min = 2 , max = 30, message = "Category name is between lenght 2 to 30.")
+    @Column(name = "category_name", columnDefinition = "TEXT DEFAULT ''")
+    @Size(min = 2, max = 30)
     private String name;
+
     @Column(name = "is_deleted", nullable = false)
-    @JsonProperty("is_deleted")
     private boolean deleted = false;
-    @ManyToMany(mappedBy = "categories", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+
+
+    @ManyToMany(mappedBy = "categories")
     @JsonIgnoreProperties("categories")
     private List<Book> books;
 

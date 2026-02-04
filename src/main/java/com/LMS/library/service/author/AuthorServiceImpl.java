@@ -53,28 +53,34 @@ public class AuthorServiceImpl implements AuthorService {
             throw new RuntimeException("One or more Book IDs are invalid");
         }
 
-        author.setBooks(books);
-
         authorRepository.save(author);
+
+        for (Book book : books) {
+            book.getAuthors().add(author);
+        }
     }
 
     @Override
     @Transactional
     public void updateAuthorWithBooks(Author author, List<Long> bookIds , Long id) {
-        Author savedAuthor = authorRepository.findAuthorById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Author", "AuthorId", id));
-
+        Author savedAuthor = getAuthorById(id);
 
         savedAuthor.setName(author.getName());
         savedAuthor.setAge(author.getAge());
-        savedAuthor.setDeleted(author.isDeleted());
-        List<Book> books = bookRepository.findAllById(bookIds);
-        if (books.size() != bookIds.size()) {
+
+        if (savedAuthor.getBooks() != null) {
+            for (Book book : savedAuthor.getBooks()) {
+                book.getAuthors().remove(savedAuthor);
+            }
+        }
+
+        List<Book> newBooks = bookRepository.findAllById(bookIds);
+        if (newBooks.size() != bookIds.size()) {
             throw new RuntimeException("One or more Book IDs are invalid");
         }
 
-        savedAuthor.setBooks(books);
-
-        authorRepository.save(savedAuthor);
+        for (Book book : newBooks) {
+            book.getAuthors().add(savedAuthor);
+        }
     }
-}
+    }

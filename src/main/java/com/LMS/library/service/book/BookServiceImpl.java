@@ -55,72 +55,67 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void saveBook(Book book, List<Long> authorIds, List<Long> categoryIds, List<Long> userIds) {
-        List<Author> authors =authorRepository.findAllById(authorIds);
-        if (authors.size() != authorIds.size()) {
-            throw new RuntimeException("One or more Author IDs are invalid");
-        }
+        List<Author> authors = authorRepository.findAllById(authorIds);
+        List<Category> categories = categoryRepository.findAllById(categoryIds);
+        List<User> users = userRepository.findAllById(userIds);
 
-
-        List<Category> categories =categoryRepository.findAllById(categoryIds);
-        if (categories.size() != categoryIds.size()) {
-            throw new RuntimeException("One or more Category IDs are invalid");
-        }
-
+        book.setAuthors(authors);
+        book.setCategories(categories);
 
         if (book.getPublisher() != null) {
-            Publisher publisher = publisherRepository.findPublisherById(book.getPublisher().getId())
+            Publisher publisher = publisherRepository
+                    .findPublisherById(book.getPublisher().getId())
                     .orElseThrow(() ->
-                            new ResourceNotFoundException("Publisher", "id", book.getPublisher().getId()));
+                            new ResourceNotFoundException(
+                                    "Publisher", "id", book.getPublisher().getId()));
             book.setPublisher(publisher);
         }
 
-        List<User> users =userRepository.findAllById(userIds);
-        if (users.size() != userIds.size()) {
-            throw new RuntimeException("One or more User IDs are invalid");
-        }
-        book.setAuthors(authors);
-        book.setCategories(categories);
-        book.setUsers(users);
         bookRepository.save(book);
+
+        for (User user : users) {
+            user.getBooks().add(book);
+        }
     }
 
     @Override
     @Transactional
     public void updateBook(Book book, List<Long> authorIds, List<Long> categoryIds, List<Long> userIds, Long id) {
-        Book savedBook = bookRepository.findBooksById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Book", "BookId", id));
-       savedBook.setName(book.getName());
+        Book savedBook = getBookById(id);
+        savedBook.setName(book.getName());
 
-
-        if (book.getPublisher() != null) {
-            Publisher publisher = publisherRepository.findPublisherById(book.getPublisher().getId())
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException("Publisher", "id", book.getPublisher().getId()));
-            savedBook.setPublisher(publisher);
+        if (savedBook.getAuthors() != null) {
+            savedBook.getAuthors().clear();
+        }
+        if (savedBook.getCategories() != null) {
+            savedBook.getCategories().clear();
+        }
+        if (savedBook.getUsers() != null) {
+            for (User user : savedBook.getUsers()) {
+                user.getBooks().remove(savedBook);
+            }
         }
 
-        List<Author> authors =authorRepository.findAllById(authorIds);
-        if (authors.size() != authorIds.size()) {
-            throw new RuntimeException("One or more Author IDs are invalid");
-        }
-
-
-
-
-        List<Category> categories =categoryRepository.findAllById(categoryIds);
-        if (categories.size() != categoryIds.size()) {
-            throw new RuntimeException("One or more Category IDs are invalid");
-        }
-
-        List<User> users =userRepository.findAllById(userIds);
-        if (users.size() != userIds.size()) {
-            throw new RuntimeException("One or more User IDs are invalid");
-        }
+        List<Author> authors = authorRepository.findAllById(authorIds);
+        List<Category> categories = categoryRepository.findAllById(categoryIds);
+        List<User> users = userRepository.findAllById(userIds);
 
         savedBook.setAuthors(authors);
         savedBook.setCategories(categories);
-        savedBook.setUsers(users);
-        bookRepository.save(savedBook);
+
+        if (book.getPublisher() != null) {
+            Publisher publisher = publisherRepository
+                    .findPublisherById(book.getPublisher().getId())
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException(
+                                    "Publisher", "id", book.getPublisher().getId()));
+            savedBook.setPublisher(publisher);
+        }
+
+        for (User user : users) {
+            user.getBooks().add(savedBook);
+        }
+
     }
 
 

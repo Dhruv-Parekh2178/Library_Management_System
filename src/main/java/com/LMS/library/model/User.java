@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Where;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
+@Where(clause = "is_deleted = false")
 @Table(name = "library_user")
 public class User {
     @Id
@@ -26,7 +29,6 @@ public class User {
     private Long id;
     @Column(name = "user_name", columnDefinition = "TEXT DEFAULT ''")
     @JsonProperty("user_name")
-//    @NotNull(message = "User name can't be null")
     @Size(min = 2 , max = 30, message = "User name is between lenght 2 to 30.")
     private String name;
 
@@ -45,7 +47,7 @@ public class User {
             inverseJoinColumns = {@JoinColumn (name= "book_id")}
     )
     @JsonIgnoreProperties("user")
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 
 
     @Transient
