@@ -3,6 +3,7 @@ package com.LMS.library.controller;
 import com.LMS.library.model.Author;
 import com.LMS.library.model.Category;
 import com.LMS.library.service.category.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,7 +45,7 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public String addCategory(@ModelAttribute Category category){
+    public String addCategory(@Valid @ModelAttribute Category category){
         List<Long> bookIds = List.of();
 
         try {
@@ -75,7 +76,7 @@ public class CategoryController {
     }
 
     @PostMapping("/put/{id}")
-    public String updateCategory(@ModelAttribute Category category , @PathVariable Long id){
+    public String updateCategory(@Valid @ModelAttribute Category category , @PathVariable Long id){
         List<Long> bookIds = List.of();
 
         try {

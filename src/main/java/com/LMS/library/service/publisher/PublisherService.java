@@ -10,9 +10,11 @@ public interface PublisherService {
 
     Publisher getPublisherById(Long id);
 
-    void savePublisher(Publisher publisher);
 
-    void updatePublisher(Publisher publisher, Long id);
 
     void deletePublisher(Long id);
+
+    void savePublisherWithBooks(Publisher publisher, List<Long> bookIds);
+
+    void updatePublisherWithBooks(Publisher publisher, List<Long> bookIds, Long id);
 }

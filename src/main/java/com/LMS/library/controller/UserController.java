@@ -3,6 +3,7 @@ package com.LMS.library.controller;
 import com.LMS.library.model.Category;
 import com.LMS.library.model.User;
 import com.LMS.library.service.user.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String addUser(@ModelAttribute User user){
+    public String addUser(@Valid @ModelAttribute User user){
         List<Long> bookIds = List.of();
 
         try {
@@ -79,7 +80,7 @@ public class UserController {
     }
 
     @PostMapping("/put/{id}")
-    public String updateUser(@ModelAttribute User user , @PathVariable Long id){
+    public String updateUser(@Valid @ModelAttribute User user , @PathVariable Long id){
         List<Long> bookIds = List.of();
 
         try {

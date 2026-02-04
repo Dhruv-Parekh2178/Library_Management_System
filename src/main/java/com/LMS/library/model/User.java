@@ -30,7 +30,7 @@ public class User {
     @Size(min = 2 , max = 30, message = "User name is between lenght 2 to 30.")
     private String name;
 
-    @Min(value = 18,message = "Author minimum age should be 18 years.")
+    @Min(value = 7,message = "User minimum age should be 7 years.")
     @Column(name = "age" ,columnDefinition = "INTEGER DEFAULT 0")
     @JsonProperty("age")
     private Integer age;

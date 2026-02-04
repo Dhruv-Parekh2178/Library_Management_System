@@ -2,6 +2,7 @@ package com.LMS.library.controller;
 
 import com.LMS.library.model.Author;
 import com.LMS.library.service.author.AuthorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,7 +48,7 @@ public class AuthorController {
 
 
     @PostMapping("/add")
-    public String addAuthor(@ModelAttribute Author author){
+    public String addAuthor(@Valid @ModelAttribute Author author){
         List<Long> bookIds = List.of();
 
         try {
@@ -79,7 +80,7 @@ public class AuthorController {
 
 
     @PostMapping("/put/{id}")
-    public String updateAuthor(@ModelAttribute Author author, @PathVariable Long id) {
+    public String updateAuthor(@Valid @ModelAttribute Author author, @PathVariable Long id) {
         List<Long> bookIds = List.of();
 
         try {

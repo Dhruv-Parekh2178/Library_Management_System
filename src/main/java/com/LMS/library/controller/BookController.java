@@ -3,6 +3,7 @@ package com.LMS.library.controller;
 import com.LMS.library.model.Author;
 import com.LMS.library.model.Book;
 import com.LMS.library.service.book.BookService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,7 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public String addBook(@ModelAttribute Book book){
+    public String addBook(@Valid @ModelAttribute Book book){
         List<Long> authorIds = List.of();
         List<Long> categoryIds = List.of();
         List<Long> userIds = List.of();
@@ -100,7 +101,7 @@ public class BookController {
     }
 
     @PostMapping("/put/{id}")
-    public String UpdateBook(@PathVariable Long id , @ModelAttribute Book book){
+    public String UpdateBook(@PathVariable Long id , @Valid @ModelAttribute Book book){
         List<Long> authorIds = List.of();
         List<Long> categoryIds = List.of();
         List<Long> userIds = List.of();

@@ -36,4 +36,6 @@ public class Publisher {
     @JsonIgnoreProperties("publisher")
     private List<Book> books;
 
+    @Transient
+    private String bookIdsJson;
 }

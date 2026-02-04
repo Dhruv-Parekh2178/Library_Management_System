@@ -13,7 +13,7 @@
 
 
 
-            <div> <strongid="a_id">Id:</strong> ${author.id}<br></div>
+            <div> <strong id="a_id">Id:</strong> ${author.id}<br></div>
             <strong>Name:</strong> ${author.name}<br>
             <strong>age:</strong> ${author.age}
 
