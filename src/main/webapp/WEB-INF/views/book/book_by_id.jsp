@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Book</title>
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/book/book_by_id.css">
 </head>
 <body>
 

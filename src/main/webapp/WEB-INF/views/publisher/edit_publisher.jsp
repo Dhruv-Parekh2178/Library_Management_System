@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Edit Publisher</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/publisher/publisher_form.css">
 </head>
 <body>
 

@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>Add User</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/user_form.css">
 </head>
 <body>
 

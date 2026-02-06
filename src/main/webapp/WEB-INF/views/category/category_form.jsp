@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>Add Category</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/category/category_form.css">
 </head>
 <body>
 

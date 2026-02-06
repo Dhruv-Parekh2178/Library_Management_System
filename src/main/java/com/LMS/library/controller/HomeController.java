@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 public class HomeController {
 
-    @GetMapping("/library")
+    @GetMapping
     public String home() {
         return "index";
     }

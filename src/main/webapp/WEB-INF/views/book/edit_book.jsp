@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Edit Book</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/book/book_form.css">
 </head>
 <body>
 

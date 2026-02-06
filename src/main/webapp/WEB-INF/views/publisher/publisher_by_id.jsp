@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Publisher</title>
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/publisher/publisher_by_id.css">
 </head>
 <body>
 

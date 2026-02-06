@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Author</title>
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/author/author_by_id.css">
 </head>
 <body>
 

@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>category</title>
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/category/category_by_id.css">
 </head>
 <body>
 

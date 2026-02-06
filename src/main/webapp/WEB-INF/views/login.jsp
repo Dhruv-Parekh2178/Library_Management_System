@@ -1,0 +1,241 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+
+
+<html>
+<head>
+    <title>Login</title>
+<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">--%>
+    <style>/* General Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        color: #2c3e50;
+        line-height: 1.6;
+    }
+
+    /* Header Styles */
+    h2 {
+        color: #2c3e50;
+        margin-bottom: 30px;
+        font-size: 1.75em;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        text-align: center;
+    }
+
+    /* Form Container */
+    form {
+        width: 100%;
+        max-width: 400px;
+        background: white;
+        border: 1px solid #e1e8ed;
+        border-radius: 6px;
+        padding: 32px;
+        margin-bottom: 20px;
+    }
+
+    /* Form Labels */
+    label {
+        display: block;
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-bottom: 8px;
+    }
+
+    /* Form Inputs */
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px 14px;
+        font-size: 14px;
+        color: #2c3e50;
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        font-family: inherit;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+        outline: none;
+        border-color: #6c757d;
+        box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.1);
+    }
+
+    /* Line Breaks for Spacing */
+    br {
+        display: block;
+        margin-bottom: 0;
+    }
+
+    label + br {
+        display: none;
+    }
+
+    input + br {
+        content: "";
+        display: block;
+        height: 16px;
+    }
+
+    input + br + br {
+        height: 0;
+    }
+
+    /* Button Container */
+    form button {
+        width: 100%;
+        padding: 12px 20px;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: 8px;
+        border: 1px solid;
+    }
+
+    /* Login Button */
+    form button[type="submit"] {
+        background-color: #2c3e50;
+        color: white;
+        border-color: #2c3e50;
+        margin-bottom: 12px;
+    }
+
+    form button[type="submit"]:hover {
+        background-color: #34495e;
+        border-color: #34495e;
+    }
+
+    form button[type="submit"]:active {
+        transform: translateY(1px);
+    }
+
+    /* Sign Up Button */
+    form button:not([type="submit"]) {
+        background-color: white;
+        color: #495057;
+        border-color: #dee2e6;
+        padding: 0;
+    }
+
+    form button:not([type="submit"]):hover {
+        background-color: #f8f9fa;
+        border-color: #adb5bd;
+    }
+
+    form button:not([type="submit"]) a {
+        display: block;
+        width: 100%;
+        padding: 12px 20px;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    /* Message Styles */
+    body > p {
+        max-width: 400px;
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    /* Error Message */
+    p[style*="color:red"],
+    p[style*="color: red"] {
+        background-color: #fff5f5;
+        color: #dc3545 !important;
+        border: 1px solid #f8d7da;
+    }
+
+    /* Success Message */
+    p[style*="color:green"],
+    p[style*="color: green"] {
+        background-color: #f0fdf4;
+        color: #16a34a !important;
+        border: 1px solid #bbf7d0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        form {
+            padding: 24px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            padding: 20px 15px;
+        }
+
+        form {
+            padding: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            font-size: 16px; /* Prevents zoom on iOS */
+        }
+
+        form button {
+            padding: 14px 20px;
+        }
+
+        form button:not([type="submit"]) a {
+            padding: 14px 20px;
+        }
+    }</style>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<form action="${pageContext.request.contextPath}/login" method="post">
+
+    <label>Username:</label><br>
+    <input type="text" name="username" required><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br><br>
+
+    <button type="submit">Login</button>
+    <button> <a href="${pageContext.request.contextPath}/signUp">Sign Up</a></button>
+</form>
+
+<c:if test="${param.error != null}">
+    <p style="color:red">Invalid username or password</p>
+</c:if>
+
+<c:if test="${param.logout != null}">
+    <p style="color:green">Logged out successfully</p>
+</c:if>
+
+</body>
+</html>

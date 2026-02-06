@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>User</title>
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/user_by_id.css">
 </head>
 <body>
 

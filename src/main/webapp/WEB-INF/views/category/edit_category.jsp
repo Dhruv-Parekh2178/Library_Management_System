@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Edit Category</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/category/category_form.css">
 </head>
 <body>
 

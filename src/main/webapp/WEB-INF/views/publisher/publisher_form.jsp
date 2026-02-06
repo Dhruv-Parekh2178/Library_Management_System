@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>Add Publisher</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/publisher/publisher_form.css">
 </head>
 <body>
 

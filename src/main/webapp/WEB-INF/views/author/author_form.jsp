@@ -4,6 +4,8 @@
 <html>
 <head>
     <title>Add Author</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/author/author_form.css">
+
 </head>
 <body>
 
