@@ -56,5 +56,7 @@
 <script src="${pageContext.request.contextPath}/js/book/prepareAuthorJson.js"></script>
 <script src="${pageContext.request.contextPath}/js/book/prepareCategoryJson.js"></script>
 <script src="${pageContext.request.contextPath}/js/book/prepareUserJson.js"></script>
+<script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
+
 </body>
 </html>

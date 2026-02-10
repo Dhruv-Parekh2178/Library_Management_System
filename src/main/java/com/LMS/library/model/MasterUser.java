@@ -23,8 +23,7 @@ public class MasterUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("master_user_id")
     private Long id;
-    @Column(name = "user_name" ,unique = true)
-    @JsonProperty("user_name")
+    @Column(unique = true)
     @NotNull(message = "user name can't be null")
     @Size(min = 2 , max = 30, message = "user name is between lenght 2 to 30.")
     private String name;

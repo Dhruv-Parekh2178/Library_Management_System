@@ -57,5 +57,6 @@
 </script>
 <script src="${pageContext.request.contextPath}/js/book/GetBookById.js"></script>
 <script src="${pageContext.request.contextPath}/js/book/deleteBookById.js"></script>
+<script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 </body>
 </html>

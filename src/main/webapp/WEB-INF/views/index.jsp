@@ -28,7 +28,28 @@
 <a href="${pageContext.request.contextPath}/user">
     <button>Manage Users</button>
 </a>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const token = localStorage.getItem("jwt");
+
+        if (token) {
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                document.getElementById('userInfo').textContent =
+                    `Logged in as: ${payload.masterUserName}`;
+            } catch (e) {
+                document.getElementById('userInfo').textContent = 'User';
+            }
+        }
+    });
+    <script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
+</script>
 
 </body>
 </html>

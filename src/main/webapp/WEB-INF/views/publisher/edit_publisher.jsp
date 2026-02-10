@@ -32,5 +32,6 @@
 <a href="${pageContext.request.contextPath}/publisher">Back</a>
 <a href="${pageContext.request.contextPath}">Go Home</a>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 </body>
 </html>

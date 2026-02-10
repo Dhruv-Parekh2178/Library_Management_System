@@ -41,6 +41,7 @@
     const contextPath = "${pageContext.request.contextPath}";
 </script>
 <script src="${pageContext.request.contextPath}/js/author/GetAuthorById.js"></script>
+<script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 <script src="${pageContext.request.contextPath}/js/author/deleteAuthorById.js"></script>
 </body>
 </html>

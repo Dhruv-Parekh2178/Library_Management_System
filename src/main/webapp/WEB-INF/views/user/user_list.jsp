@@ -40,6 +40,7 @@
 <script>
     const contextPath = "${pageContext.request.contextPath}";
 </script>
+<script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 <script src="${pageContext.request.contextPath}/js/user/GetUserById.js"></script>
 <script src="${pageContext.request.contextPath}/js/user/deleteUserById.js"></script>
 </body>

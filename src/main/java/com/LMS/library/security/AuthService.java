@@ -13,24 +13,24 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final AuthenticationManager authenticationManager;
-    private final AuthUtil authUtil;
-    private final MasterUserRepository masterUserRepository;
+    private final MasterUserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthUtil authUtil;
+    private final AuthenticationManager authenticationManager;
 
-    public void login(MasterUser masterUser) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(masterUser.getUsername() ,masterUser.getPassword())
-        );
-    MasterUser masterUser1 = (MasterUser) authentication.getPrincipal();
+    public String doLogin(String username, String password) {
 
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(username, password)
+                );
 
-    String token = authUtil.generateAccessToken(masterUser1);
+        MasterUser user = (MasterUser) authentication.getPrincipal();
+        return authUtil.generateAccessToken(user);
     }
-    public void signUp(MasterUser masterUser){
-        MasterUser savedMasterUser = masterUserRepository.findByName(masterUser.getName()).orElse(null);
-        if(savedMasterUser != null) {throw new IllegalArgumentException("User Already Exist");}
-          masterUser.setPassword(passwordEncoder.encode(masterUser.getPassword()));
-          masterUserRepository.save(masterUser);
+
+    public void signUp(MasterUser user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        repository.save(user);
     }
 }

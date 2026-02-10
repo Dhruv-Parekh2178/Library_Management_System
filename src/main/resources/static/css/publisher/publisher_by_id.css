@@ -23,7 +23,7 @@ h2 {
     letter-spacing: -0.5px;
 }
 
-/* Book Details Container */
+/* Publisher Details Container */
 body > div,
 body > strong,
 body > p {
@@ -46,11 +46,11 @@ strong {
     margin-right: 8px;
 }
 
-#b_id {
+#p_id {
     color: #6c757d;
 }
 
-/* Sections */
+/* Books Section */
 p {
     margin-top: 20px;
     margin-bottom: 10px;

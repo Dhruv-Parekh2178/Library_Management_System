@@ -39,7 +39,9 @@
 <script>
     const contextPath = "${pageContext.request.contextPath}";
 </script>
+
 <script src="${pageContext.request.contextPath}/js/publisher/deletePublisherById.js"></script>
 <script src="${pageContext.request.contextPath}/js/publisher/GetPublisherById.js"></script>
+<script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 </body>
 </html>
