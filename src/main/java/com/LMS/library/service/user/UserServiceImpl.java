@@ -3,7 +3,6 @@ package com.LMS.library.service.user;
 import com.LMS.library.dtos.UserDTO;
 import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Book;
-import com.LMS.library.model.Category;
 import com.LMS.library.model.User;
 import com.LMS.library.repository.BookRepository;
 import com.LMS.library.repository.UserRepository;
@@ -16,7 +15,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

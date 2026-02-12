@@ -15,5 +15,5 @@ public class UserDTO implements Serializable {
     private Long id;
     private String name;
     private String age;
-    private List<BookDTO> books;
+    private List<BookSimpleDTO> books;
 }

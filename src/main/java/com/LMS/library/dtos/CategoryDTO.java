@@ -14,5 +14,5 @@ public class CategoryDTO implements Serializable {
 
     private Long id;
     private String name;
-    private List<BookDTO> books;
+    private List<BookSimpleDTO> books;
 }

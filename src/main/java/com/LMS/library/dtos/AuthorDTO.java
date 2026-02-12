@@ -14,5 +14,5 @@ public class AuthorDTO implements Serializable {
     private Long id;
     private String name;
     private Integer age;
-    private List<BookDTO> books;
+    private List<BookSimpleDTO> books;
 }

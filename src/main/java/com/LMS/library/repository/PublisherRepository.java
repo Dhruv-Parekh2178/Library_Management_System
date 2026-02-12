@@ -1,6 +1,5 @@
 package com.LMS.library.repository;
 
-import com.LMS.library.model.Category;
 import com.LMS.library.model.Publisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

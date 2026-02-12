@@ -3,21 +3,17 @@ package com.LMS.library.service.publisher;
 import com.LMS.library.dtos.PublisherDTO;
 import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Book;
-import com.LMS.library.model.Category;
 import com.LMS.library.model.Publisher;
-import com.LMS.library.model.User;
 import com.LMS.library.repository.BookRepository;
 import com.LMS.library.repository.PublisherRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

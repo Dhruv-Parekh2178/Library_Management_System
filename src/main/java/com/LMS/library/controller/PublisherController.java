@@ -2,18 +2,15 @@ package com.LMS.library.controller;
 
 import com.LMS.library.dtos.PublisherDTO;
 import com.LMS.library.model.Publisher;
-import com.LMS.library.model.User;
 import com.LMS.library.service.publisher.PublisherService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
@@ -74,12 +71,12 @@ public class PublisherController {
     @GetMapping("/put/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         PublisherDTO publisher = publisherService.getPublisherById(id);
-        model.addAttribute("user", publisher);
+        model.addAttribute("publisher", publisher);
         return "publisher/edit_publisher";
     }
 
     @PostMapping("/put/{id}")
-    public String updatePublisher(@Valid @ModelAttribute Publisher publisher , @PathVariable Long id){
+    public String updatePublisher(@Valid @ModelAttribute Publisher publisher, @PathVariable Long id){
         List<Long> bookIds = List.of();
 
         try {

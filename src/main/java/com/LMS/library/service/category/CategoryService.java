@@ -1,7 +1,6 @@
 package com.LMS.library.service.category;
 
 import com.LMS.library.dtos.CategoryDTO;
-import com.LMS.library.model.Author;
 import com.LMS.library.model.Category;
 
 import java.util.List;

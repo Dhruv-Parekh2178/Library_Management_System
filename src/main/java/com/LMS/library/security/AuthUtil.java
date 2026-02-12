@@ -1,6 +1,5 @@
 package com.LMS.library.security;
 
-import com.LMS.library.model.MasterUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -11,8 +10,6 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-
-import static java.security.KeyRep.Type.SECRET;
 
 @Component
 public class AuthUtil {
