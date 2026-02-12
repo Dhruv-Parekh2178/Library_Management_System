@@ -1,5 +1,6 @@
 package com.LMS.library.service.publisher;
 
+import com.LMS.library.dtos.PublisherDTO;
 import com.LMS.library.model.Publisher;
 import com.LMS.library.model.User;
 
@@ -8,7 +9,7 @@ import java.util.List;
 public interface PublisherService {
     List<Publisher> getPublishers();
 
-    Publisher getPublisherById(Long id);
+    PublisherDTO getPublisherById(Long id);
 
 
 

@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Where;
+
+import java.io.Serializable;
 import java.util.List;
 
 @ToString(exclude = "books")
@@ -22,7 +24,7 @@ import java.util.List;
 @DynamicInsert
 @Where(clause = "is_deleted = false")
 @Table(name = "author")
-public class Author {
+public class Author implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +41,7 @@ public class Author {
     @Column(name = "is_deleted", nullable = false)
     private boolean deleted = false;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "authors",fetch = FetchType.EAGER)
     @JsonIgnoreProperties("authors")
     private List<Book> books;
 

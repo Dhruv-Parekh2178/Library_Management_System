@@ -1,5 +1,6 @@
 package com.LMS.library.service.category;
 
+import com.LMS.library.dtos.CategoryDTO;
 import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Author;
 import com.LMS.library.model.Book;
@@ -8,7 +9,11 @@ import com.LMS.library.repository.BookRepository;
 import com.LMS.library.repository.CategoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +27,8 @@ public class  CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private final BookRepository bookRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<Category> getCategories() {
@@ -31,12 +38,16 @@ public class  CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getCategoryById(Long id) {
-        return categoryRepository.findCategoryById(id)
+    @Cacheable(value = "category" , key = "#id")
+    public CategoryDTO getCategoryById(Long id) {
+        System.out.println("Fetching category with "+id+" from DB...");
+        Category category= categoryRepository.findCategoryById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Category" ,"CategoryId" , id));
+        return modelMapper.map(category,CategoryDTO.class);
     }
 
     @Override
+    @CacheEvict(value = "category" , key = "#id")
     public void deleteCategory(Long id) {
         Category savedCategory = categoryRepository.findCategoryById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category" , "CateegoryId" , id));
@@ -62,8 +73,12 @@ public class  CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
+    @CachePut(value = "category" , key = "#id")
     public void updateCaregoryWithBooks(Category category, List<Long> bookIds, Long id) {
-        Category savedCategory = getCategoryById(id);
+        Category savedCategory = categoryRepository.findCategoryById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category" , "CateegoryId" , id));
+
         savedCategory.setName(category.getName());
 
         if (savedCategory.getBooks() != null) {

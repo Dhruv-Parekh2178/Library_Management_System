@@ -1,5 +1,6 @@
 package com.LMS.library.controller;
 
+import com.LMS.library.dtos.UserDTO;
 import com.LMS.library.model.Category;
 import com.LMS.library.model.User;
 import com.LMS.library.service.user.UserService;
@@ -35,7 +36,7 @@ public class UserController {
 
     @GetMapping("/get/{id}")
     public String getUserById(@PathVariable Long id, Model model){
-        User user = userService.getUserById(id);
+        UserDTO user = userService.getUserById(id);
         if(user==null)
             return "redirect:/user";
 
@@ -75,7 +76,7 @@ public class UserController {
 
     @GetMapping("/put/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        User user = userService.getUserById(id);
+        UserDTO user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "user/edit_user";
     }

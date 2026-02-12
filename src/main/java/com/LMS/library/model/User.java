@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Where;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import java.util.List;
 @DynamicInsert
 @Where(clause = "is_deleted = false")
 @Table(name = "library_user")
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,7 +42,7 @@ public class User {
     @JsonProperty("is_deleted")
     private boolean deleted = false;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_books",
             joinColumns = {@JoinColumn (name= "user_id")},
             inverseJoinColumns = {@JoinColumn (name= "book_id")}

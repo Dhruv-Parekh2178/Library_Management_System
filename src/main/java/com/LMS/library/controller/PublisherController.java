@@ -1,5 +1,6 @@
 package com.LMS.library.controller;
 
+import com.LMS.library.dtos.PublisherDTO;
 import com.LMS.library.model.Publisher;
 import com.LMS.library.model.User;
 import com.LMS.library.service.publisher.PublisherService;
@@ -33,7 +34,7 @@ public class PublisherController {
 
     @GetMapping("/get/{id}")
     public String getPublisherById(@PathVariable Long id , Model model){
-        Publisher publisher = publisherService.getPublisherById(id);
+        PublisherDTO publisher = publisherService.getPublisherById(id);
         if(publisher==null)
             return "redirect:/publisher";
         model.addAttribute("publisher"  , publisher);
@@ -72,7 +73,7 @@ public class PublisherController {
 
     @GetMapping("/put/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Publisher publisher = publisherService.getPublisherById(id);
+        PublisherDTO publisher = publisherService.getPublisherById(id);
         model.addAttribute("user", publisher);
         return "publisher/edit_publisher";
     }

@@ -5,11 +5,14 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+
+import static java.security.KeyRep.Type.SECRET;
 
 @Component
 public class AuthUtil {
@@ -26,12 +29,12 @@ public class AuthUtil {
        );
    }
 
-    public String generateAccessToken(MasterUser masterUser) {
+    public String generateAccessToken(Long id,String name) {
         long currentTimeMillis = System.currentTimeMillis();
         return Jwts.builder()
-                .subject(masterUser.getName())
-                .claim("masterUserId", masterUser.getId().toString())
-                .claim("masterUserName" , masterUser.getName())
+                .subject(name)
+                .claim("masterUserId", id.toString())
+                .claim("masterUserName" , name)
                 .issuedAt(new Date(currentTimeMillis))
                 .expiration(new Date(currentTimeMillis + jwtExpiration))
                 .signWith(getSecretKey())
@@ -53,5 +56,19 @@ public class AuthUtil {
         return jwtExpiration;
     }
 
+    public boolean validateToken(String token , UserDetails userDetails) {
+        String username = getUserNameFromToken(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    }
 
+    private boolean isTokenExpired(String token) {
+        Date expiration = Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getExpiration();
+        return expiration.before(new Date());
+
+    }
 }

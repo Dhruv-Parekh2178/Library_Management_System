@@ -1,5 +1,6 @@
 package com.LMS.library.service.author;
 
+import com.LMS.library.dtos.AuthorDTO;
 import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Author;
 import com.LMS.library.model.Book;
@@ -7,9 +8,14 @@ import com.LMS.library.repository.AuthorRepository;
 import com.LMS.library.repository.BookRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,33 +26,41 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
     @Autowired
     private  final BookRepository bookRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
+
     public List<Author> getAuthors() {
-        List<Author> authors = authorRepository.findAll().stream()
+              List<Author> authors = authorRepository.findAll().stream()
                 .filter(author -> !author.isDeleted()).toList();
         return authors;
     }
 
     @Override
-    public Author getAuthorById(Long id){
-        return authorRepository.findAuthorById(id)
+    @Cacheable(value = "author" , key="#id")
+    public AuthorDTO getAuthorById(Long id){
+        System.out.println("Fetching author with "+id+" from DB...");
+        Author author = authorRepository.findAuthorById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuhtorId" , id));
+
+        return modelMapper.map(author, AuthorDTO.class);
     }
 
 
-
     @Override
-    public void deleteAuthor(Long id) {
+    @CacheEvict(value = "author" , key = "#id")
+    public Author deleteAuthor(Long id) {
         Author savedAuthor = authorRepository.findAuthorById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuthorId" , id));
 
         savedAuthor.setDeleted(true);
-        authorRepository.save(savedAuthor);
+      return authorRepository.save(savedAuthor);
     }
 
     @Override
     @Transactional
+
     public void saveAuthorWithBooks(Author author, List<Long> bookIds) {
         List<Book> books = bookRepository.findAllById(bookIds);
         if (books.size() != bookIds.size()) {
@@ -62,8 +76,10 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
+    @CachePut(value = "author" , key = "#id")
     public void updateAuthorWithBooks(Author author, List<Long> bookIds , Long id) {
-        Author savedAuthor = getAuthorById(id);
+        Author savedAuthor = authorRepository.findAuthorById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuthorId" , id));
 
         savedAuthor.setName(author.getName());
         savedAuthor.setAge(author.getAge());

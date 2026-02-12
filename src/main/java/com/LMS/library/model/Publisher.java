@@ -6,22 +6,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Where;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
 @Where(clause = "is_deleted = false")
 @Table(name = "publisher")
-public class Publisher {
+public class Publisher implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,10 +34,18 @@ public class Publisher {
     @Column(name = "is_deleted", nullable = false)
     @JsonProperty("is_deleted")
     private boolean deleted = false;
-    @OneToMany(mappedBy = "publisher", orphanRemoval = true)
+    @OneToMany(mappedBy = "publisher",fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnoreProperties("publisher")
     private List<Book> books;
 
     @Transient
     private String bookIdsJson;
+    @Override
+    public String toString() {
+        return "Publisher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
 }

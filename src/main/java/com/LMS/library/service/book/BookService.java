@@ -1,5 +1,6 @@
 package com.LMS.library.service.book;
 
+import com.LMS.library.dtos.BookDTO;
 import com.LMS.library.model.Book;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 public interface BookService {
     List<Book> getbooks();
 
-    Book getBookById(Long id);
+    BookDTO getBookById(Long id);
 
     void deleteBook(Long id);
 

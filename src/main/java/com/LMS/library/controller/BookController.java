@@ -1,5 +1,6 @@
 package com.LMS.library.controller;
 
+import com.LMS.library.dtos.BookDTO;
 import com.LMS.library.model.Author;
 import com.LMS.library.model.Book;
 import com.LMS.library.service.book.BookService;
@@ -35,7 +36,7 @@ public class BookController {
 
     @GetMapping("/get/{id}")
     public String getBookById(@PathVariable Long id, Model model){
-        Book book = bookService.getBookById(id);
+        BookDTO book = bookService.getBookById(id);
         if(book==null)
             return "redirect:/book";
         model.addAttribute("book" , book);
@@ -96,7 +97,7 @@ public class BookController {
 
     @GetMapping("/put/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Book book = bookService.getBookById(id);
+        BookDTO book = bookService.getBookById(id);
         model.addAttribute("book", book);
         return "book/edit_book";
     }

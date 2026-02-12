@@ -17,8 +17,10 @@
     <label>Password:</label><br>
     <input type="password" name="password" id="password" required><br><br>
 
-    <button type="button" onclick="login()">Login</button>
-    <button type="button"><a href="${pageContext.request.contextPath}/signUp">Sign Up</a></button>
+    <button type="submit">Login</button>
+    <a href="${pageContext.request.contextPath}/signUp">
+        <button type="button">Sign Up</button>
+    </a>
 </form>
 
 <div id="errorMessage" style="color:red; display:none;"></div>
@@ -31,32 +33,29 @@
     <p style="color:green">Logged out successfully</p>
 </c:if>
 <script>
-    function login() {
-        const username = document.getElementById("username").value;
-        const pass = document.getElementById("password").value;
+    const contextPath = "${pageContext.request.contextPath}";
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+        e.preventDefault();
 
-        console.log("username:", username, "password:", pass);
+        const formData = new FormData(this);
 
-        fetch('${pageContext.request.contextPath}/doLogin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: username,
-                password: pass
-            })
+        fetch(contextPath + "/login", {
+            method: "POST",
+            body: formData
         })
             .then(res => {
-                if (!res.ok) throw new Error("Login failed");
-                return res.text();
+                if (!res.ok) throw new Error("Invalid username or password");
+                return res.json();
             })
-            .then(token => {
-                localStorage.setItem("JWT", token);
-                window.location.href = "${pageContext.request.contextPath}/index";
+            .then(data => {
+                localStorage.setItem("JWT", data.token);
+                window.location.href = contextPath + "/index";
             })
-            .catch(() => alert("Invalid login"));
-    }
+            .catch(err => {
+                document.getElementById("errorMessage").style.display = "block";
+                document.getElementById("errorMessage").innerText = err.message;
+            });
+    });
 </script>
 
 <script>

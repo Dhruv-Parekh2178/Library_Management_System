@@ -1,5 +1,6 @@
 package com.LMS.library.service.user;
 
+import com.LMS.library.dtos.UserDTO;
 import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Book;
 import com.LMS.library.model.Category;
@@ -8,7 +9,11 @@ import com.LMS.library.repository.BookRepository;
 import com.LMS.library.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,22 +27,30 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private final BookRepository bookRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<User> getUsers() {
+
+
         List<User> users = userRepository.findAll().stream()
                 .filter(user -> !user.isDeleted()).toList();
         return users;
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userRepository.findUserById(id)
+    @Cacheable(value = "user" , key ="#id")
+    public UserDTO getUserById(Long id) {
+        System.out.println("Fetching user with "+id+" from DB...");
+        User user = userRepository.findUserById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("User" ,"UserId" , id));
+        return modelMapper.map(user , UserDTO.class);
     }
 
 
     @Override
+    @CacheEvict(value = "user", key = "#id")
     public void deleteUser(Long id) {
         User savedUser = userRepository.findUserById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuthorId" , id));
@@ -48,8 +61,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    @CachePut(value = "user" , key="#id")
     public void updateUserWithBooks(User user, List<Long> bookIds, Long id) {
-        User savedUser = getUserById(id);
+        User savedUser = userRepository.findUserById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("User" ,"UserId" , id));
 
         savedUser.setName(user.getName());
         savedUser.setAge(user.getAge());

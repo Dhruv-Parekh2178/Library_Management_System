@@ -8,10 +8,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -42,49 +44,68 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             FilterChain chain
     ) throws ServletException, IOException {
 
-        String token = null;
-        if (request.getCookies() != null) {
-            for (Cookie cookie : request.getCookies()) {
-                if ("JWT".equals(cookie.getName())) {
-                    token = cookie.getValue();
-                    break;
-                }
-            }
-        }
-        if (token == null) {
-            String header = request.getHeader("Authorization");
-            if (header != null && header.startsWith("Bearer ")) {
-                token = header.substring(7);
-            }
-        }
-
-        if (token == null) {
-            chain.doFilter(request, response);
-            return;
-        }
-
         try {
+
+            String header = request.getHeader("Authorization");
+
+            if (header == null || !header.startsWith("Bearer ")) {
+                chain.doFilter(request, response);
+                return;
+            }
+
+            String token = header.substring(7);
+
             String username = authUtil.getUserNameFromToken(token);
 
-            MasterUser user = userRepository.findByName(username).orElse(null);
+            MasterUser user = userRepository.findByName(username)
+                    .orElseThrow(() -> new RuntimeException("User Not Found"));
 
-            if (user != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (SecurityContextHolder.getContext().getAuthentication() == null) {
+
+                if (!authUtil.validateToken(token, user)) {
+                    logoutUser(request, response);
+                    return;
+                }
 
                 UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()
+                        new UsernamePasswordAuthenticationToken(
+                                user,
+                                null,
+                                user.getAuthorities()
                         );
+
+                authentication.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request)
+                );
+
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
 
             chain.doFilter(request, response);
 
         } catch (ExpiredJwtException e) {
-            Cookie cookie = new Cookie("JWT", null);
-            cookie.setMaxAge(0);
-            cookie.setPath("/");
-            response.addCookie(cookie);
-
-            response.sendRedirect("/login?expired=true");
+            logoutUser(request, response);
+        } catch (Exception e) {
+            logoutUser(request, response);
         }
     }
+
+    private void logoutUser(HttpServletRequest request,
+                            HttpServletResponse response) throws IOException {
+
+        SecurityContextHolder.clearContext();
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        response.sendRedirect(request.getContextPath() + "/login");
+    }
+
 }

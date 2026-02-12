@@ -1,5 +1,6 @@
 package com.LMS.library.service.publisher;
 
+import com.LMS.library.dtos.PublisherDTO;
 import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Book;
 import com.LMS.library.model.Category;
@@ -9,7 +10,11 @@ import com.LMS.library.repository.BookRepository;
 import com.LMS.library.repository.PublisherRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,18 +28,25 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Autowired
     private final BookRepository bookRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<Publisher> getPublishers() {
+
+
         List<Publisher> publishers = publisherRepository.findAll().stream()
                 .filter(publisher -> !publisher.isDeleted()).toList();
         return publishers;
     }
 
     @Override
-    public Publisher getPublisherById(Long id) {
-        return publisherRepository.findPublisherById(id)
+    @Cacheable(value = "publisher", key = "#id")
+    public PublisherDTO getPublisherById(Long id) {
+        System.out.println("Fetching publisher with "+id+" from DB...");
+        Publisher publisher = publisherRepository.findPublisherById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Publisher" ,"PublisherId" , id));
+        return modelMapper.map(publisher, PublisherDTO.class);
     }
 
     @Override
@@ -64,8 +76,10 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     @Transactional
+    @CachePut(value = "publisher" , key = "#id")
     public void updatePublisherWithBooks(Publisher publisher, List<Long> bookIds, Long id) {
-        Publisher savedPublisher = getPublisherById(id);
+        Publisher savedPublisher = publisherRepository.findPublisherById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Publisher" ,"PublisherId" , id));
         savedPublisher.setName(publisher.getName());
 
         if (savedPublisher.getBooks() != null) {

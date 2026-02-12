@@ -1,5 +1,6 @@
 package com.LMS.library.controller;
 
+import com.LMS.library.dtos.CategoryDTO;
 import com.LMS.library.model.Author;
 import com.LMS.library.model.Category;
 import com.LMS.library.service.category.CategoryService;
@@ -31,7 +32,7 @@ public class CategoryController {
 
     @GetMapping("/get/{id}")
     public String getCategoryById(@PathVariable Long id, Model model){
-        Category category = categoryService.getCategoryById(id);
+        CategoryDTO category = categoryService.getCategoryById(id);
         if(category==null)
             return "redirect:/category";
 
@@ -71,7 +72,7 @@ public class CategoryController {
 
     @GetMapping("/put/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Category category = categoryService.getCategoryById(id);
+        CategoryDTO category = categoryService.getCategoryById(id);
         model.addAttribute("category", category);
         return "category/edit_category";
     }

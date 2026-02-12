@@ -7,23 +7,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Where;
 
+import java.io.Serializable;
 import java.util.List;
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
 @Where(clause = "is_deleted = false")
 @Table(name = "book")
 @ToString(exclude = {"authors", "categories", "users"})
-public class Book {
+public class Book implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +35,7 @@ public class Book {
     @Column(name = "is_deleted", nullable = false)
     private boolean deleted = false;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "books_authors",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -46,7 +45,7 @@ public class Book {
     private List<Author> authors;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "books_categories",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -56,12 +55,12 @@ public class Book {
     private List<Category> categories;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("books")
     private Publisher publisher;
 
 
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany(mappedBy = "books",fetch = FetchType.EAGER)
     @JsonIgnoreProperties("books")
     private List<User> users;
 
@@ -73,4 +72,12 @@ public class Book {
 
     @Transient
     private String userIdsJson;
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

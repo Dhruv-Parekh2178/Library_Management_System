@@ -1,5 +1,6 @@
 package com.LMS.library.service.author;
 
+import com.LMS.library.dtos.AuthorDTO;
 import com.LMS.library.model.Author;
 
 import java.util.List;
@@ -7,13 +8,9 @@ import java.util.List;
 public interface AuthorService {
     List<Author> getAuthors();
 
-    Author getAuthorById(Long id);
+    AuthorDTO getAuthorById(Long id);
 
-//    Author saveAuthor(Author author);
-
-//    void updateAuthor(Author author, Long id);
-
-    void deleteAuthor(Long id);
+    Author deleteAuthor(Long id);
 
     void saveAuthorWithBooks(Author author, List<Long> bookIds);
 

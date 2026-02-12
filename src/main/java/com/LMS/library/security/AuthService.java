@@ -26,7 +26,7 @@ public class AuthService {
                 );
 
         MasterUser user = (MasterUser) authentication.getPrincipal();
-        return authUtil.generateAccessToken(user);
+        return authUtil.generateAccessToken(user.getId(),user.getName());
     }
 
     public void signUp(MasterUser user) {

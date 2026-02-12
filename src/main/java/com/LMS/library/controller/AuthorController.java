@@ -1,10 +1,12 @@
 package com.LMS.library.controller;
 
+import com.LMS.library.dtos.AuthorDTO;
 import com.LMS.library.model.Author;
 import com.LMS.library.service.author.AuthorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,7 @@ public class AuthorController {
     @Autowired
     private final AuthorService authorService;
 
+
     @GetMapping
     public String getAllAuthors(Model model){
         List<Author> authors = authorService.getAuthors();
@@ -33,7 +36,7 @@ public class AuthorController {
 
     @GetMapping("/get/{id}")
     public String getAuthorById(@PathVariable Long id , Model model){
-        Author author = authorService.getAuthorById(id);
+        AuthorDTO author = authorService.getAuthorById(id);
         if(author==null)
             return "redirect:/author";
 
@@ -74,7 +77,7 @@ public class AuthorController {
 
     @GetMapping("/put/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Author author = authorService.getAuthorById(id);
+        AuthorDTO author = authorService.getAuthorById(id);
         model.addAttribute("author", author);
         return "author/edit_author";
     }
