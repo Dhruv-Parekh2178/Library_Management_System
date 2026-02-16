@@ -30,6 +30,11 @@
                 <form class="delete_btn" data-id=${author.id} >
                     <button type="submit">Delete</button>
                 </form>
+                <form action="${pageContext.request.contextPath}/author/get/details/${author.id}"
+                      method="get"
+                      style="display: inline;">
+                    <button type="submit" class="pdf-download-btn">Download PDF</button>
+                </form>
             </div>
 
 <a href="${pageContext.request.contextPath}/author">Back</a>

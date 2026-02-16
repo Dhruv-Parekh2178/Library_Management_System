@@ -31,7 +31,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String uri = request.getRequestURI();
         return uri.contains("/login")
-                || uri.contains("/doLogin")
                 || uri.contains("/signUp")
                 || uri.contains("/css/")
                 || uri.contains("/js/");
@@ -100,10 +99,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             session.invalidate();
         }
 
-        Cookie cookie = new Cookie("JSESSIONID", null);
-        cookie.setPath("/");
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+//        Cookie cookie = new Cookie("JSESSIONID", null);
+//        cookie.setPath("/");
+//        cookie.setMaxAge(0);
+//        response.addCookie(cookie);
 
         response.sendRedirect(request.getContextPath() + "/login");
     }

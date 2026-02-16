@@ -22,6 +22,12 @@ h2 {
     font-weight: 600;
     letter-spacing: -0.5px;
 }
+.validation-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+}
 
 /* Form Container */
 form {

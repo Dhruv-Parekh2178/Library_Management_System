@@ -25,7 +25,6 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
                 .findByName(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // ✅ Generate token with ID + NAME
         String token = authUtil.generateAccessToken(user.getId(), user.getName());
 
         response.setContentType("application/json");

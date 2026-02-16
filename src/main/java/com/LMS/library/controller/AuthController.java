@@ -31,8 +31,8 @@ public class AuthController {
     @ResponseBody
     public ResponseEntity<String> doLogin(@RequestBody AuthRequest req, HttpServletResponse response) {
 
-        System.out.println("Username: " + req.getName());
-        System.out.println("Password: " + req.getPassword());
+//        System.out.println("Username: " + req.getName());
+//        System.out.println("Password: " + req.getPassword());
 
         String token = authService.doLogin(
                 req.getName().trim(),

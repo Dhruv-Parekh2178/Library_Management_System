@@ -11,7 +11,6 @@ $(document).ready(function () {
             .map(Number);
 
         $("#categoryIdsJson").val(JSON.stringify(categoryIds));
-        return true;
     });
 });
 

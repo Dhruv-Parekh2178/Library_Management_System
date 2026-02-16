@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+			  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			  xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+			  name="author" pageWidth="842" pageHeight="595" orientation="Landscape"
+			  columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+
+	<queryString language="sql"><![CDATA[]]></queryString>
+
+	<field name="id" class="java.lang.Long"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="age" class="java.lang.Integer"/>
+	<field name="books" class="java.lang.String"/>
+
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+
+	<title>
+		<band height="100" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="36951a53-3a9a-4ab6-b908-69a3febdb3db" mode="Opaque" x="220" y="0" width="371" height="61" backcolor="#B6CACF"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="2e698f08-f03e-4e2d-bef1-1ce68c5cb6ba" x="219" y="-1" width="373" height="63"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="26"/>
+				</textElement>
+				<text><![CDATA[Author Details]]></text>
+			</staticText>
+		</band>
+	</title>
+
+	<detail>
+		<band height="400" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="325239b0-e906-4b1a-b56e-28186e6303db" mode="Opaque" x="40" y="20" width="140" height="50" backcolor="#F2BD72"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="c9113c43-49a9-451e-83b0-249e7a57c8d6" mode="Opaque" x="40" y="110" width="140" height="50" backcolor="#F2BD72"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="0927245a-0ffc-4c1d-a7a0-e89ac49ad0b6" mode="Opaque" x="40" y="210" width="140" height="50" backcolor="#F2BD72"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="4a4c3a5d-d84d-4e17-82b9-7d241b3d8593" mode="Opaque" x="40" y="310" width="140" height="50" backcolor="#F2BD72"/>
+			</rectangle>
+
+			<staticText>
+				<reportElement uuid="6c94df39-642b-437a-a942-c7a9b7ebf306" x="60" y="30" width="100" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="17"/>
+				</textElement>
+				<text><![CDATA[ID :]]></text>
+			</staticText>
+
+			<staticText>
+				<reportElement uuid="0394cb5e-91bb-420d-aae9-99fc58be865e" x="60" y="120" width="100" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="17"/>
+				</textElement>
+				<text><![CDATA[Name :]]></text>
+			</staticText>
+
+			<staticText>
+				<reportElement uuid="2f59dde8-c883-4ce0-b19d-6da391f66ebc" x="60" y="220" width="100" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="17"/>
+				</textElement>
+				<text><![CDATA[Age :]]></text>
+			</staticText>
+
+			<staticText>
+				<reportElement uuid="62237e2e-f7d3-4684-a6bf-388b52eccbe8" x="60" y="320" width="100" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="17"/>
+				</textElement>
+				<text><![CDATA[Books :]]></text>
+			</staticText>
+
+			<rectangle>
+				<reportElement uuid="77a552ab-aac3-4ae3-97aa-a7b43bbd6f5f" mode="Opaque" x="230" y="20" width="161" height="51" backcolor="#F2BD72"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="f5c7310b-f1c1-4a5a-a59b-227bab6c3c6a" mode="Opaque" x="230" y="110" width="350" height="51" backcolor="#F2BD72"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="09625a4e-c0c5-419b-b99b-c5e1511ad373" mode="Opaque" x="230" y="210" width="161" height="51" backcolor="#F2BD72"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="01ed5f6b-f62a-4b5d-beef-f8adcd15ec0e" mode="Opaque" x="230" y="310" width="570" height="51" backcolor="#F2BD72"/>
+			</rectangle>
+
+			<textField>
+				<reportElement uuid="7fd5a40b-27b8-4c20-b5ce-28e1fa65e0a9" x="260" y="30" width="100" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="17"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+
+			<textField>
+				<reportElement uuid="b1b9aaa6-1bbe-441c-a1ce-aa5413b75e35" x="240" y="120" width="320" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="17"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+
+			<textField>
+				<reportElement uuid="6f71081e-b112-42ce-9a57-a123bcdb112f" x="260" y="220" width="100" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="17"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{age}]]></textFieldExpression>
+			</textField>
+
+			<textField>
+				<reportElement uuid="a0ff35d6-7f0e-4810-aa0d-0e9acf959e77" x="240" y="320" width="551" height="30"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="17"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{books}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3bfa637e-4777-45c6-b2c5-8b5863c61a14" x="210" y="12" width="375" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<text><![CDATA[Thanks for using our Application]]></text>
+			</staticText>
+		</band>
+	</summary>
+
+</jasperReport>

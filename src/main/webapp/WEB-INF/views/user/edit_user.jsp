@@ -9,18 +9,18 @@
 
 <h2>Edit User</h2>
 
-<form action="${pageContext.request.contextPath}/user/put/${user.id}"
-      method="post"
-   onsubmit="prepareBooksJson()">
+<form id="userForm" action="${pageContext.request.contextPath}/user/put/${user.id}"
+      method="post">
 
     <label>Name</label><br>
-    <input type="text" name="name" value="${user.name}" required><br><br>
+    <input type="text" name="name" value="${user.name}" ><br><br>
 
     <label>Age</label><br>
-    <input type="number" name="age" value="${user.age}" required><br><br>
+    <input type="number" name="age" value="${user.age}" ><br><br>
 
     <label>Book IDs (comma separated)</label><br>
     <input type="text"
+           name="books"
            id="bookIdsInput"
            placeholder="e.g. 1,2,5,7"
         ><br><br>
@@ -34,7 +34,11 @@
 <br>
 <a href="${pageContext.request.contextPath}/user">Back</a>
 <a href="${pageContext.request.contextPath}">Go Home</a>
-<script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/user/prepareBookJson.js"></script>
+<script src="${pageContext.request.contextPath}/js/user/validateForm.js"></script>
+<script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
+
 </body>
 </html>

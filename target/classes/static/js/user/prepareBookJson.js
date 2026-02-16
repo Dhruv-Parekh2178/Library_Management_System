@@ -11,7 +11,7 @@ $(document).ready(function () {
             .map(Number);
 
         $("#bookIdsJson").val(JSON.stringify(bookIds));
-        return true;
+
     });
 });
 

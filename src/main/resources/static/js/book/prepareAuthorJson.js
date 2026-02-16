@@ -11,7 +11,6 @@ $(document).ready(function () {
             .map(Number);
 
         $("#authorIdsJson").val(JSON.stringify(authorIds));
-        return true;
     });
 });
 

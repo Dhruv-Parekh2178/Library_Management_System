@@ -27,7 +27,6 @@
 
             <div class="actions">
                 <a href="${pageContext.request.contextPath}/author/put/${author.id}">Edit</a>
-
                 <form class="delete_btn" data-id=${author.id} >
                     <button type="submit">Delete</button>
                 </form>
@@ -43,5 +42,6 @@
 <script src="${pageContext.request.contextPath}/js/author/GetAuthorById.js"></script>
 <script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 <script src="${pageContext.request.contextPath}/js/author/deleteAuthorById.js"></script>
+
 </body>
 </html>

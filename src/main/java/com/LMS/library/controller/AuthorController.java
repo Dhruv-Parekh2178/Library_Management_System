@@ -1,18 +1,28 @@
 package com.LMS.library.controller;
 
 import com.LMS.library.dtos.AuthorDTO;
+import com.LMS.library.dtos.AuthorPdfDTO;
 import com.LMS.library.model.Author;
 import com.LMS.library.service.author.AuthorService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -40,6 +50,45 @@ public class AuthorController {
 
         model.addAttribute("author",author);
         return "author/author_by_id";
+    }
+
+    @GetMapping("/get/details/{id}")
+    public ResponseEntity<byte[]> downloadDetailsPdf(@PathVariable Long id){
+        AuthorDTO author = authorService.getAuthorById(id);
+
+        String bookNames = author.getBooks().stream()
+                .map(book -> book.getName())
+                .collect(Collectors.joining(", "));
+
+        // Create a new DTO with formatted books
+        AuthorPdfDTO pdfData = new AuthorPdfDTO(
+                author.getId(),
+                author.getName(),
+                author.getAge(),
+                bookNames  // Pass formatted string instead of list
+        );
+        List<AuthorPdfDTO> list = List.of(pdfData);
+
+        JRBeanCollectionDataSource source = new JRBeanCollectionDataSource(list);
+
+        try(InputStream inputStream = new ClassPathResource("/reports/author.jrxml").getInputStream()){
+
+           JasperReport report = JasperCompileManager.compileReport(inputStream);
+
+           JasperPrint jasperPrint = JasperFillManager.fillReport(report , null ,source);
+
+           byte[] bytes = JasperExportManager.exportReportToPdf(jasperPrint);
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=author.pdf")
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(bytes);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (JRException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/add")
