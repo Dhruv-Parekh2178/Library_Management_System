@@ -13,7 +13,7 @@
       method="post">
 
     <label>Name</label><br>
-    <input type="text" name="name" value="${category.name}" ><br><br>
+    <input type="text" id="name" name="name" value="${category.name}" ><br><br>
 
   <div>Select Books from below List </div>
      <c:forEach var="book" items="${books}">

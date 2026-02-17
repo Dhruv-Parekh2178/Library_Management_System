@@ -1,6 +1,9 @@
  $(document).ready(function() {
             $("#categoryForm").on("submit" , function(event){
             event.preventDefault();
+              if (!$("#categoryForm").valid()) {
+                                    return;
+                                }
             $.ajax({
                             url:`${contextPath}/category/add/data`,
                             type: 'GET',

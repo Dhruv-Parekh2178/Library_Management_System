@@ -32,6 +32,15 @@ form {
     padding: 32px;
     margin-bottom: 20px;
 }
+span.validation-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+}
+input.validation-error {
+    border: 1px solid red;
+}
 
 /* Form Labels */
 label {

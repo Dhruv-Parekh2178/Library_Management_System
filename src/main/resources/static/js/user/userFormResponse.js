@@ -1,6 +1,9 @@
  $(document).ready(function() {
             $("#userForm").on("submit" , function(event){
             event.preventDefault();
+              if (!$("#userForm").valid()) {
+                                    return;
+                                }
             $.ajax({
                             url:`${contextPath}/user/add/data`,
                             type: 'GET',

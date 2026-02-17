@@ -14,10 +14,10 @@
 <form id="authorForm" action="${pageContext.request.contextPath}/author/add" method="post">
 
     <label for="name">Name</label><br>
-    <input type="text" name="name" ><br><br>
+    <input type="text" id="name" name="name" ><br><br>
 
     <label for="age">Age</label><br>
-    <input type="number" name="age" ><br><br>
+    <input type="number" id="age" name="age" ><br><br>
 
     <div>Select Books from below List </div>
    <c:forEach var="book" items="${books}">
@@ -40,8 +40,8 @@
     const contextPath = "${pageContext.request.contextPath}";
 </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/author/validateForm.js"></script>
 <script src="${pageContext.request.contextPath}/js/author/authorFormResponse.js"></script>
+<script src="${pageContext.request.contextPath}/js/author/validateForm.js"></script>
 <script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 </body>
 </html>

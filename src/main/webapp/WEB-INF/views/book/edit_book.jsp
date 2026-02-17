@@ -10,11 +10,10 @@
 <h2>Edit Book</h2>
 
 <form id="bookForm" action="${pageContext.request.contextPath}/book/put/${book.id}"
-      method="post"
-      onsubmit="prepareAuthorJson(); prepareCategoryJson(); prepareUserJson(); return true;">
+      method="post">
 
     <label for="name">Name</label><br>
-    <input type="text" name="name" value="${book.name}" ><br><br>
+    <input type="text" id="name" name="name" value="${book.name}" ><br><br>
 
  <div>Select Authors from below List </div>
            <c:forEach var="author" items="${authors}">
@@ -33,7 +32,7 @@
            </c:forEach>
 
      <label>Publiher</label><br>
-     <input type="text" name="publisher"><br><br>
+     <input type="text" id="publisher" name="publisher"><br><br>
 
        <div>Select Users from below List </div>
                <c:forEach var="user" items="${users}">

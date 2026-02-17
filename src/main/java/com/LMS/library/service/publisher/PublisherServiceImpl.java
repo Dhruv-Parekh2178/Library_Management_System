@@ -79,7 +79,6 @@ public class PublisherServiceImpl implements PublisherService {
             book.setPublisher(publisher);
         }
     }
-
     @Override
     @Transactional
     @CachePut(value = "publisher", key = "#id")
@@ -94,23 +93,20 @@ public class PublisherServiceImpl implements PublisherService {
         for (Book book : savedPublisher.getBooks()) {
             book.setPublisher(null);
         }
-
         savedPublisher.getBooks().clear();
 
-        List<Book> newBooks = new ArrayList<>();
-
         if (bookIds != null && !bookIds.isEmpty()) {
-            newBooks = bookRepository.findAllById(bookIds);
+            List<Book> newBooks = bookRepository.findAllById(bookIds);
+
             if (newBooks.size() != bookIds.size()) {
                 throw new RuntimeException("One or more Book IDs are invalid");
             }
-        }
 
-        for (Book book : newBooks) {
-            book.setPublisher(savedPublisher);
+            for (Book book : newBooks) {
+                book.setPublisher(savedPublisher);
+                savedPublisher.getBooks().add(book);
+            }
         }
-
-        savedPublisher.setBooks(newBooks);
 
         return modelMapper.map(savedPublisher, PublisherDTO.class);
     }

@@ -135,6 +135,15 @@ button[type="submit"] {
     transition: all 0.2s ease;
     margin-top: 8px;
 }
+span.validation-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+}
+input.validation-error {
+    border: 1px solid red;
+}
 
 button[type="submit"]:hover {
     background-color: #34495e;

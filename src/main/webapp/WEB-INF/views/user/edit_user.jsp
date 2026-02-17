@@ -13,10 +13,10 @@
       method="post">
 
     <label>Name</label><br>
-    <input type="text" name="name" value="${user.name}" ><br><br>
+    <input type="text" id="name" name="name" value="${user.name}" ><br><br>
 
     <label>Age</label><br>
-    <input type="number" name="age" value="${user.age}" ><br><br>
+    <input type="number" id="name" name="age" value="${user.age}" ><br><br>
 
    <div>Select Books from below List </div>
       <c:forEach var="book" items="${books}">

@@ -1,6 +1,9 @@
  $(document).ready(function() {
             $("#publisherForm").on("submit" , function(event){
             event.preventDefault();
+              if (!$("#publisherForm").valid()) {
+                                    return;
+                                }
             $.ajax({
                             url:`${contextPath}/publisher/put/${id}/data`,
                             type: 'GET',

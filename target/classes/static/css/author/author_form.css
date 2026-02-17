@@ -183,6 +183,15 @@ body > a:last-of-type:hover {
     border-color: #adb5bd;
     color: #2c3e50;
 }
+span.validation-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+}
+input.validation-error {
+    border: 1px solid red;
+}
 
 /* Line Break Before Links */
 body > br {

@@ -1,6 +1,9 @@
  $(document).ready(function() {
             $("#bookForm").on("submit" , function(event){
             event.preventDefault();
+              if (!$("#bookForm").valid()) {
+                                    return;
+                                }
             $.ajax({
                             url:`${contextPath}/book/add/data`,
                             type: 'GET',

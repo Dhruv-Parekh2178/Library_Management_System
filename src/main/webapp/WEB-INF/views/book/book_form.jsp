@@ -13,7 +13,7 @@
 <form id="bookForm" action="${pageContext.request.contextPath}/book/add" method="post">
 
     <label for="name">Name</label><br>
-    <input type="text" name="name" ><br><br>
+    <input type="text" id="name" name="name" ><br><br>
 
 
     <div>Select Authors from below List </div>
@@ -33,7 +33,7 @@
           </c:forEach>
 
     <label>Publiher</label><br>
-    <input type="text" name="publisher"><br><br>
+    <input type="text" id="publisher" name="publisher"><br><br>
 
       <div>Select Users from below List </div>
               <c:forEach var="user" items="${users}">

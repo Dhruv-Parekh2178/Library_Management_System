@@ -13,10 +13,10 @@
 <form id="userForm" action="${pageContext.request.contextPath}/user/add" method="post">
 
     <label>Name</label><br>
-    <input type="text" name="name" required><br><br>
+    <input type="text" id="name" name="name" required><br><br>
 
     <label>Age</label><br>
-    <input type="number" name="age" required><br><br>
+    <input type="number" id="age" name="age" required><br><br>
 
     <div>Select Books from below List </div>
        <c:forEach var="book" items="${books}">

@@ -1,6 +1,10 @@
  $(document).ready(function() {
             $("#authorForm").on("submit" , function(event){
             event.preventDefault();
+
+            if (!$("#authorForm").valid()) {
+                        return;
+                    }
             $.ajax({
                             url:`${contextPath}/author/add/data`,
                             type: 'GET',
