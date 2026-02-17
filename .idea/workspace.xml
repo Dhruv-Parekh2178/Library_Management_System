@@ -5,98 +5,136 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0fe7582-9364-47c1-8041-84fc816d6eb1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/config/AppConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/AuthorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/AuthorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/BookSimpleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/BookSimpleDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/security/CustomSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/security/CustomSuccessHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/security/JwtAuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/security/JwtAuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/PublisherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/PublisherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/AuthorDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/AuthorDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/BookDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/BookDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/CategoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/CategoryDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/PublisherDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/PublisherDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/UserSimpleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/dtos/UserSimpleDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/model/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/model/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/model/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/model/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/model/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/model/Publisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/model/Publisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/author/author_by_id.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/author/author_by_id.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/author/AuthorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/author/AuthorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/author/AuthorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/author/AuthorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/book/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/book/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/book/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/book/BookServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/category/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/category/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/category/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/category/CategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/publisher/PublisherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/publisher/PublisherService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/publisher/PublisherServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/publisher/PublisherServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/user/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/user/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMS/library/service/user/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/author/author_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/author/author_form.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/book/book_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/book/book_form.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/author/author_list.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/author/author_list.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/category/category_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/category/category_form.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/publisher/publisher_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/publisher/publisher_form.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/user/user_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/user/user_form.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/author/prepareBookJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/author/prepareBookJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/book/prepareAuthorJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/book/prepareAuthorJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/book/prepareCategoryJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/book/prepareCategoryJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/book/prepareUserJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/book/prepareUserJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/category/prepareBookJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/category/prepareBookJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/publisher/prepareBookJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/publisher/prepareBookJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/user/prepareBookJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/user/prepareBookJson.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/author/GetAuthorById.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/author/GetAuthorById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/author/deleteAuthorById.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/author/deleteAuthorById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/book/GetBookById.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/book/GetBookById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/book/deleteBookById.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/book/deleteBookById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/category/GetCategoryById.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/category/GetCategoryById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/category/deleteCategoryById.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/category/deleteCategoryById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/publisher/GetPublisherById.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/publisher/GetPublisherById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/publisher/deletePublisherById.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/publisher/deletePublisherById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/user/GetUserById.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/user/GetUserById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/user/deleteUserById.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/user/deleteUserById.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/author/author_by_id.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/author/author_by_id.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/author/author_form.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/author/author_form.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/author/author_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/author/author_list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/author/edit_author.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/author/edit_author.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/book/book_by_id.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/book/book_by_id.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/book/book_form.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/book/book_form.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/book/book_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/book/book_list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/book/edit_book.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/book/edit_book.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category/category_by_id.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category/category_by_id.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category/category_form.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category/category_form.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category/category_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category/category_list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category/edit_category.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category/edit_category.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/login.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/publisher/edit_publisher.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/publisher/edit_publisher.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/publisher/publisher_by_id.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/publisher/publisher_by_id.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/publisher/publisher_form.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/publisher/publisher_form.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/publisher/publisher_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/publisher/publisher_list.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/signup.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/signup.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user/edit_user.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user/edit_user.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user/user_by_id.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user/user_by_id.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user/user_form.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user/user_form.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user/user_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user/user_list.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/config/AppConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/config/AppConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/AuthController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/AuthorController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/AuthorController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/AuthorController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/AuthorController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/AuthorController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/AuthorController$2.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/AuthorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/AuthorController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController$6.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/BookController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/CategoryController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/CategoryController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/CategoryController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/CategoryController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/CategoryController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/CategoryController$2.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/CategoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/CategoryController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/HomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/HomeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/PublisherController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/PublisherController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/PublisherController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/PublisherController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/PublisherController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/PublisherController$2.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/PublisherController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/PublisherController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/UserController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/UserController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/UserController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/UserController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/UserController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/UserController$2.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/exception/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/exception/GlobalExceptionHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/model/Author.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/model/Author.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/model/Book.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/model/Book.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/model/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/model/Category.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/model/Publisher.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/model/Publisher.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/security/AuthUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/security/AuthUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/security/JwtAuthFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/security/JwtAuthFilter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/security/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/service/author/AuthorService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/service/author/AuthorService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/service/author/AuthorServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/service/author/AuthorServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/service/book/BookService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/service/book/BookService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/service/book/BookServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/service/book/BookServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/service/category/CategoryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/service/category/CategoryService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/service/category/CategoryServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/service/category/CategoryServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/service/publisher/PublisherService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/service/publisher/PublisherService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/service/publisher/PublisherServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/service/publisher/PublisherServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/service/user/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/service/user/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/LMS/library/service/user/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/LMS/library/service/user/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/css/author/author_by_id.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/author/author_by_id.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/static/css/author/author_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/author/author_form.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/css/book/book_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/book/book_form.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/author/author_list.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/author/author_list.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/static/css/category/category_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/category/category_form.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/static/css/publisher/publisher_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/publisher/publisher_form.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/static/css/user/user_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/user/user_form.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/js/author/prepareBookJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/author/prepareBookJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/js/book/prepareAuthorJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/book/prepareAuthorJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/js/book/prepareCategoryJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/book/prepareCategoryJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/js/book/prepareUserJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/book/prepareUserJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/js/category/prepareBookJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/category/prepareBookJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/js/publisher/prepareBookJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/publisher/prepareBookJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/js/user/prepareBookJson.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/user/prepareBookJson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/library-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/library-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/library-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/library-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-02-11T11-06-34_851.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.LMS.library.LibraryApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.LMS.library.LibraryApplicationTests.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.LMS.library.LibraryApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.LMS.library.LibraryApplicationTests.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/author/GetAuthorById.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/author/GetAuthorById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/author/deleteAuthorById.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/author/deleteAuthorById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/author/prepareBookJson.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/book/GetBookById.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/book/GetBookById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/book/deleteBookById.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/book/deleteBookById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/book/prepareAuthorJson.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/book/prepareCategoryJson.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/book/prepareUserJson.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/category/GetCategoryById.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/category/GetCategoryById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/category/deleteCategoryById.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/category/deleteCategoryById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/category/prepareBookJson.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/publisher/GetPublisherById.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/publisher/GetPublisherById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/publisher/deletePublisherById.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/publisher/deletePublisherById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/publisher/prepareBookJson.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/user/GetUserById.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/user/GetUserById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/user/deleteUserById.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/user/deleteUserById.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/user/prepareBookJson.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,8 +148,8 @@
         <option value="Record" />
         <option value="HTML File" />
         <option value="CSS File" />
-        <option value="Class" />
         <option value="JavaScript File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -199,6 +237,9 @@
       <recent name="D:\library\src\main\webapp\WEB-INF\views\author" />
       <recent name="D:\library\src\main\resources\static\css" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.LMS.library.dtos" />
+    </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
@@ -284,8 +325,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/LMS/library/controller/AuthController.java</url>
-          <line>31</line>
-          <properties class="com.LMS.library.controller.AuthController">
+          <line>32</line>
+          <properties class="com.LMS.library.controller.AuthController" method="doLogin">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

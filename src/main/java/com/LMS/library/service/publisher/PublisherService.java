@@ -1,12 +1,13 @@
 package com.LMS.library.service.publisher;
 
 import com.LMS.library.dtos.PublisherDTO;
+import com.LMS.library.dtos.PublisherRequestDTO;
 import com.LMS.library.model.Publisher;
 
 import java.util.List;
 
 public interface PublisherService {
-    List<Publisher> getPublishers();
+    List<PublisherDTO> getPublishers();
 
     PublisherDTO getPublisherById(Long id);
 
@@ -14,7 +15,7 @@ public interface PublisherService {
 
     void deletePublisher(Long id);
 
-    void savePublisherWithBooks(Publisher publisher, List<Long> bookIds);
+    void savePublisherWithBooks(PublisherRequestDTO publisherRequestDTO, List<Long> bookIds);
 
-    void updatePublisherWithBooks(Publisher publisher, List<Long> bookIds, Long id);
+    PublisherDTO updatePublisherWithBooks(PublisherRequestDTO publisherRequestDTO, List<Long> bookIds, Long id);
 }

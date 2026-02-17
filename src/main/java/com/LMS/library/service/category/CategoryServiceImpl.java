@@ -1,6 +1,7 @@
 package com.LMS.library.service.category;
 
 import com.LMS.library.dtos.CategoryDTO;
+import com.LMS.library.dtos.CategoryRequestDTO;
 import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Book;
 import com.LMS.library.model.Category;
@@ -15,6 +16,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,10 +31,11 @@ public class  CategoryServiceImpl implements CategoryService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<Category> getCategories() {
+    public List<CategoryDTO> getCategories() {
         List<Category> categories = categoryRepository.findAll().stream()
                 .filter(category -> !category.isDeleted()).toList();
-        return categories;
+        return categories.stream()
+                .map(category -> modelMapper.map(category , CategoryDTO.class)).toList();
     }
 
     @Override
@@ -56,14 +59,22 @@ public class  CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public void saveCategoryWithBooks(Category category, List<Long> bookIds) {
-        List<Book> books = bookRepository.findAllById(bookIds);
-        if (books.size() != bookIds.size()) {
-            throw new RuntimeException("One or more Book IDs are invalid");
+    public void saveCategoryWithBooks(CategoryRequestDTO dto, List<Long> bookIds) {
+
+        Category category = new Category();
+        category.setName(dto.getName());
+
+        List<Book> books = new ArrayList<>();
+
+        if (bookIds != null && !bookIds.isEmpty()) {
+            books = bookRepository.findAllById(bookIds);
+            if (books.size() != bookIds.size()) {
+                throw new RuntimeException("One or more Book IDs are invalid");
+            }
         }
 
+        category.setBooks(books);
         categoryRepository.save(category);
-
 
         for (Book book : books) {
             book.getCategories().add(category);
@@ -72,26 +83,36 @@ public class  CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    @CachePut(value = "category" , key = "#id")
-    public void updateCaregoryWithBooks(Category category, List<Long> bookIds, Long id) {
+    @CachePut(value = "category", key = "#id")
+    public CategoryDTO updateCaregoryWithBooks(CategoryRequestDTO dto, List<Long> bookIds, Long id) {
+
         Category savedCategory = categoryRepository.findCategoryById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Category" , "CateegoryId" , id));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Category", "CategoryId", id));
 
-        savedCategory.setName(category.getName());
+        savedCategory.setName(dto.getName());
 
-        if (savedCategory.getBooks() != null) {
-            for (Book book : savedCategory.getBooks()) {
-                book.getCategories().remove(savedCategory);
+        for (Book book : savedCategory.getBooks()) {
+            book.getCategories().remove(savedCategory);
+        }
+        savedCategory.getBooks().clear();
+
+        List<Book> newBooks = new ArrayList<>();
+
+        if (bookIds != null && !bookIds.isEmpty()) {
+            newBooks = bookRepository.findAllById(bookIds);
+            if (newBooks.size() != bookIds.size()) {
+                throw new RuntimeException("One or more Book IDs are invalid");
             }
         }
 
-        List<Book> newBooks = bookRepository.findAllById(bookIds);
-        if (newBooks.size() != bookIds.size()) {
-            throw new RuntimeException("One or more Book IDs are invalid");
-        }
+        savedCategory.setBooks(newBooks);
 
         for (Book book : newBooks) {
             book.getCategories().add(savedCategory);
         }
+
+        return modelMapper.map(savedCategory, CategoryDTO.class);
     }
+
 }

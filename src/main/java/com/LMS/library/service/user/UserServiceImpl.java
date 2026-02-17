@@ -1,6 +1,7 @@
 package com.LMS.library.service.user;
 
 import com.LMS.library.dtos.UserDTO;
+import com.LMS.library.dtos.UserRequestDTO;
 import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Book;
 import com.LMS.library.model.User;
@@ -15,6 +16,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,12 +31,13 @@ public class UserServiceImpl implements UserService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<User> getUsers() {
+    public List<UserDTO> getUsers() {
 
 
         List<User> users = userRepository.findAll().stream()
                 .filter(user -> !user.isDeleted()).toList();
-        return users;
+        return users.stream()
+                .map(user -> modelMapper.map(user , UserDTO.class)).toList();
     }
 
     @Override
@@ -59,45 +62,62 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    @CachePut(value = "user" , key="#id")
-    public void updateUserWithBooks(User user, List<Long> bookIds, Long id) {
+    @CachePut(value = "user", key = "#id")
+    public UserDTO updateUserWithBooks(UserRequestDTO dto, List<Long> bookIds, Long id) {
+
         User savedUser = userRepository.findUserById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("User" ,"UserId" , id));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User", "UserId", id));
 
-        savedUser.setName(user.getName());
-        savedUser.setAge(user.getAge());
-        if (savedUser.getBooks() != null) {
-            for (Book book : savedUser.getBooks()) {
-                book.getUsers().remove(savedUser);
+        savedUser.setName(dto.getName());
+        savedUser.setAge(dto.getAge());
+
+        for (Book book : savedUser.getBooks()) {
+            book.getUsers().remove(savedUser);
+        }
+        savedUser.getBooks().clear();
+
+        List<Book> newBooks = new ArrayList<>();
+
+        if (bookIds != null && !bookIds.isEmpty()) {
+            newBooks = bookRepository.findAllById(bookIds);
+            if (newBooks.size() != bookIds.size()) {
+                throw new RuntimeException("One or more Book IDs are invalid");
             }
-
-            savedUser.getBooks().clear();
         }
 
-        List<Book> newBooks = bookRepository.findAllById(bookIds);
-        if (newBooks.size() != bookIds.size()) {
-            throw new RuntimeException("One or more Book IDs are invalid");
-        }
+        savedUser.setBooks(newBooks);
 
         for (Book book : newBooks) {
-            savedUser.getBooks().add(book);
             book.getUsers().add(savedUser);
         }
+
+        return modelMapper.map(savedUser, UserDTO.class);
     }
 
     @Override
     @Transactional
-    public void saveUserWithBooks(User user, List<Long> bookIds) {
+    public void saveUserWithBooks(UserRequestDTO dto, List<Long> bookIds) {
 
-        List<Book> books = bookRepository.findAllById(bookIds);
-        if (books.size() != bookIds.size()) {
-            throw new RuntimeException("One or more Book IDs are invalid");
+        User user = new User();
+        user.setName(dto.getName());
+        user.setAge(dto.getAge());
+
+        List<Book> books = new ArrayList<>();
+
+        if (bookIds != null && !bookIds.isEmpty()) {
+            books = bookRepository.findAllById(bookIds);
+            if (books.size() != bookIds.size()) {
+                throw new RuntimeException("One or more Book IDs are invalid");
+            }
         }
 
+        user.setBooks(books);
         userRepository.save(user);
+
         for (Book book : books) {
-            user.getBooks().add(book);
             book.getUsers().add(user);
         }
     }
+
 }

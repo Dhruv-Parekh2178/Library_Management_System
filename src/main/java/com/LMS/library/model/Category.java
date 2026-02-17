@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
-@Where(clause = "is_deleted = false")
+//@Where(clause = "is_deleted = false")
 @Table(name = "category")
 public class Category implements Serializable {
 
@@ -33,9 +33,8 @@ public class Category implements Serializable {
 
 
     @ManyToMany(mappedBy = "categories",fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("categories")
+//    @JsonIgnoreProperties("categories")
     private List<Book> books;
 
-    @Transient
-    private String bookIdsJson;
+
 }

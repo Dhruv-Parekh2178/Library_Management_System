@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
-@Where(clause = "is_deleted = false")
+//@Where(clause = "is_deleted = false")
 @Table(name = "library_user")
 public class User implements Serializable {
     @Id
@@ -45,10 +45,9 @@ public class User implements Serializable {
             joinColumns = {@JoinColumn (name= "user_id")},
             inverseJoinColumns = {@JoinColumn (name= "book_id")}
     )
-    @JsonIgnoreProperties("user")
+//    @JsonIgnoreProperties("user")
     private List<Book> books = new ArrayList<>();
 
 
-    @Transient
-    private String bookIdsJson;
+
 }

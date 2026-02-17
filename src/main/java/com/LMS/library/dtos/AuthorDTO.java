@@ -1,4 +1,5 @@
 package com.LMS.library.dtos;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

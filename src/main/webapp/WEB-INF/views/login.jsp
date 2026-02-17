@@ -57,7 +57,6 @@
             });
     });
 </script>
-
 <script>
     if (window.location.search.includes("expired")) {
         localStorage.removeItem("JWT");

@@ -11,7 +11,7 @@
 
 <h2>User Registration</h2>
 
-<form action="${pageContext.request.contextPath}/signUp" method="post">
+<form id="signupForm" action="${pageContext.request.contextPath}/signUp" method="post">
 
     <label>Username:</label><br>
     <input type="text" name="name" required><br><br>
@@ -36,6 +36,9 @@
 <c:if test="${not empty success}">
     <p style="color:green">${success}</p>
 </c:if>
-
+<script>
+ const contextPath = "${pageContext.request.contextPath}"
+</script>
+<script src="${pageContext.request.contextPath}/js/signupResponse.js"></script>
 </body>
 </html>

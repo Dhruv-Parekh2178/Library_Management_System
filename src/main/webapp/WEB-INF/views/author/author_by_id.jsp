@@ -10,9 +10,6 @@
 <body>
 
 <h2>Author Details</h2>
-
-
-
             <div> <strong id="a_id">Id:</strong> ${author.id}<br></div>
             <strong>Name:</strong> ${author.name}<br>
             <strong>age:</strong> ${author.age}
@@ -46,6 +43,7 @@
     const contextPath = "${pageContext.request.contextPath}";
 </script>
 <script src="${pageContext.request.contextPath}/js/author/deleteAuthorById.js"></script>
+<script src="${pageContext.request.contextPath}/js/author/GetAuthorById.js"></script>
 <script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 </body>
 </html>

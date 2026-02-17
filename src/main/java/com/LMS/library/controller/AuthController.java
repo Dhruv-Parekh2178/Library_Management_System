@@ -1,6 +1,7 @@
 package com.LMS.library.controller;
 
 import com.LMS.library.dtos.AuthRequest;
+import com.LMS.library.model.ApiResponse;
 import com.LMS.library.model.MasterUser;
 import com.LMS.library.security.AuthService;
 import jakarta.annotation.PostConstruct;
@@ -29,7 +30,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<String> doLogin(@RequestBody AuthRequest req, HttpServletResponse response) {
+    public ResponseEntity<ApiResponse<String>> doLogin(@RequestBody AuthRequest req, HttpServletResponse response) {
 
 //        System.out.println("Username: " + req.getName());
 //        System.out.println("Password: " + req.getPassword());
@@ -39,13 +40,18 @@ public class AuthController {
                 req.getPassword().trim()
         );
 
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(new ApiResponse<>(true,"success",token));
     }
 
 
     @GetMapping("/signUp")
     public String signupPage() {
         return "signup";
+    }
+
+    @GetMapping("/signUp/data")
+    public ResponseEntity<ApiResponse<String>> signupPageData() {
+        return ResponseEntity.ok(new ApiResponse<>(true,"success","Master User added successfully."));
     }
 
     @PostMapping("/signUp")

@@ -11,5 +11,5 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class UserSimpleDTO implements Serializable {
     private Long id;
-    private String userName;
+    private String name;
 }

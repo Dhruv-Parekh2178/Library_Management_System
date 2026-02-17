@@ -21,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
-@Where(clause = "is_deleted = false")
+//@Where(clause = "is_deleted = false")
 @Table(name = "author")
 public class Author implements Serializable {
 
@@ -41,11 +41,10 @@ public class Author implements Serializable {
     private boolean deleted = false;
 
     @ManyToMany(mappedBy = "authors",fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("authors")
+//    @JsonIgnoreProperties("authors")
     private List<Book> books;
 
-    @Transient
-    private String bookIdsJson;
+
 }
 
 

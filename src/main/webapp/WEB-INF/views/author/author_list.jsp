@@ -34,6 +34,11 @@
         </div>
     </c:forEach>
 </div>
+ <form action="${pageContext.request.contextPath}/author/get/allDetails"
+                      method="get"
+                      style="display: inline;">
+                    <button type="submit" class="pdf-download-btn">Download PDF</button>
+                </form>
 <a href="${pageContext.request.contextPath}">Go Home</a>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
@@ -42,6 +47,6 @@
 <script src="${pageContext.request.contextPath}/js/author/GetAuthorById.js"></script>
 <script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 <script src="${pageContext.request.contextPath}/js/author/deleteAuthorById.js"></script>
-
+<script src="${pageContext.request.contextPath}/js/author/authorListResponse.js"></script>
 </body>
 </html>

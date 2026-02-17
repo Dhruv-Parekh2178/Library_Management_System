@@ -22,12 +22,6 @@ h2 {
     font-weight: 600;
     letter-spacing: -0.5px;
 }
-.validation-error {
-    color: red;
-    font-size: 14px;
-    margin-top: 4px;
-    display: block;
-}
 
 /* Form Container */
 form {
@@ -71,9 +65,37 @@ input[type="number"]:focus {
     box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.1);
 }
 
-input[type="text"]::placeholder {
-    color: #adb5bd;
+/* Checkbox Section */
+form > div {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+}
+
+/* Checkbox Container */
+input[type="checkbox"] {
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #2c3e50;
+}
+
+/* Checkbox Label Text */
+input[type="checkbox"] + text,
+form > text {
+    display: inline-block;
+    margin-right: 20px;
     font-size: 14px;
+    color: #495057;
+    line-height: 32px;
+    cursor: pointer;
 }
 
 /* Hidden Input */

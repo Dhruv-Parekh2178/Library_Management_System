@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
-@Where(clause = "is_deleted = false")
+//@Where(clause = "is_deleted = false")
 @Table(name = "publisher")
 public class Publisher implements Serializable {
     @Id
@@ -36,17 +36,16 @@ public class Publisher implements Serializable {
     @JsonProperty("is_deleted")
     private boolean deleted = false;
     @OneToMany(mappedBy = "publisher",fetch = FetchType.EAGER, orphanRemoval = true)
-    @JsonIgnoreProperties("publisher")
+//    @JsonIgnoreProperties("publisher")
     private List<Book> books;
 
-    @Transient
-    private String bookIdsJson;
-    @Override
-    public String toString() {
-        return "Publisher{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
+
+//    @Override
+//    public String toString() {
+//        return "Publisher{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                '}';
+//    }
 
 }

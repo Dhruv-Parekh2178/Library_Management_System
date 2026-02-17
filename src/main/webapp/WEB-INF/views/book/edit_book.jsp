@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <html>
 <head>
     <title>Edit Book</title>
@@ -16,36 +16,32 @@
     <label for="name">Name</label><br>
     <input type="text" name="name" value="${book.name}" ><br><br>
 
-    <label for="authors">Author IDs (comma separated)</label><br>
-    <input type="text"
-           name="auhtors"
-           id="authorIdsInput"
-           placeholder="e.g. 1,2,5,7"><br><br>
+ <div>Select Authors from below List </div>
+           <c:forEach var="author" items="${authors}">
+               <input type="checkbox"
+                      name="authorIds"
+                      value="${author.id}" />
+               ${author.name}
+           </c:forEach>
 
+   <div>Select Categories from below List </div>
+           <c:forEach var="category" items="${categories}">
+               <input type="checkbox"
+                      name="categoryIds"
+                      value="${category.id}" />
+               ${category.name}
+           </c:forEach>
 
-    <input type="hidden" name="authorIdsJson" id="authorIdsJson">
+     <label>Publiher</label><br>
+     <input type="text" name="publisher"><br><br>
 
-    <label for="categories">Categories IDs (comma separated)</label><br>
-    <input type="text"
-           name="categories"
-           id="categoryIdsInput"
-           placeholder="e.g. 1,2,5,7"><br><br>
-
-
-    <input type="hidden" name="categoryIdsJson" id="categoryIdsJson">
-
-    <label>Publiher</label><br>
-    <input type="text" name="publisher" value="${book.publisher}"><br><br>
-
-
-    <label for="users">Users IDs (comma separated)</label><br>
-    <input type="text"
-           name="users"
-           id="userIdsInput"
-           placeholder="e.g. 1,2,5,7"><br><br>
-
-
-    <input type="hidden" name="userIdsJson" id="userIdsJson">
+       <div>Select Users from below List </div>
+               <c:forEach var="user" items="${users}">
+                   <input type="checkbox"
+                          name="userIds"
+                          value="${user.id}" />
+                   ${user.name}
+               </c:forEach>
 
     <button type="submit">Update</button>
 </form>
@@ -54,12 +50,13 @@
 <a href="${pageContext.request.contextPath}/book">Back</a>
 <a href="${pageContext.request.contextPath}">Go Home</a>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+<script>
+    const contextPath = "${pageContext.request.contextPath}";
+    const id = "${book.id}";
+</script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/book/prepareAuthorJson.js"></script>
-<script src="${pageContext.request.contextPath}/js/book/prepareCategoryJson.js"></script>
-<script src="${pageContext.request.contextPath}/js/book/prepareUserJson.js"></script>
 <script src="${pageContext.request.contextPath}/js/book/validateForm.js"></script>
+<script src="${pageContext.request.contextPath}/js/book/editBookResponse.js"></script>
 <script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 </body>
 </html>

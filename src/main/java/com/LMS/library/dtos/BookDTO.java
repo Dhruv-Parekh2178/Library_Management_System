@@ -1,5 +1,6 @@
 package com.LMS.library.dtos;
 
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,4 @@ public class BookDTO implements Serializable {
     private List<CategoryDTO> categories;
     private PublisherDTO publisher;
     private List<UserSimpleDTO> users;
-
 }

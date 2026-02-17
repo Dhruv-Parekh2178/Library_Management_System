@@ -29,7 +29,6 @@
     <button>Manage Users</button>
 </a>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
 <script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 </body>
 </html>

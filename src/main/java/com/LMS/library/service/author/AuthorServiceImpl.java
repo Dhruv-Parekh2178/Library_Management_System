@@ -1,6 +1,7 @@
 package com.LMS.library.service.author;
 
 import com.LMS.library.dtos.AuthorDTO;
+import com.LMS.library.dtos.AuthorRequestDTO;
 import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Author;
 import com.LMS.library.model.Book;
@@ -15,6 +16,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,10 +31,13 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
 
-    public List<Author> getAuthors() {
+    public List<AuthorDTO> getAuthors() {
               List<Author> authors = authorRepository.findAll().stream()
                 .filter(author -> !author.isDeleted()).toList();
-        return authors;
+
+              List<AuthorDTO> authorDTOS = authors.stream()
+                      .map(author -> modelMapper.map(author,AuthorDTO.class)).toList();
+        return authorDTOS;
     }
 
     @Override
@@ -48,25 +53,31 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @CacheEvict(value = "author" , key = "#id")
-    public Author deleteAuthor(Long id) {
+    public void deleteAuthor(Long id) {
         Author savedAuthor = authorRepository.findAuthorById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuthorId" , id));
 
         savedAuthor.setDeleted(true);
-      return authorRepository.save(savedAuthor);
+        authorRepository.save(savedAuthor);
     }
-
     @Override
     @Transactional
+    public void saveAuthorWithBooks(AuthorRequestDTO dto, List<Long> bookIds) {
+        Author author = new Author();
+        author.setName(dto.getName());
+        author.setAge(dto.getAge());
 
-    public void saveAuthorWithBooks(Author author, List<Long> bookIds) {
-        List<Book> books = bookRepository.findAllById(bookIds);
-        if (books.size() != bookIds.size()) {
-            throw new RuntimeException("One or more Book IDs are invalid");
+        List<Book> books = new ArrayList<>();
+        if (bookIds != null && !bookIds.isEmpty()) {
+            books = bookRepository.findAllById(bookIds);
+            if (books.size() != bookIds.size()) {
+                throw new RuntimeException("One or more Book IDs are invalid");
+            }
         }
 
-        authorRepository.save(author);
+        author.setBooks(books);
 
+        authorRepository.save(author);
         for (Book book : books) {
             book.getAuthors().add(author);
         }
@@ -74,27 +85,38 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
-    @CachePut(value = "author" , key = "#id")
-    public void updateAuthorWithBooks(Author author, List<Long> bookIds , Long id) {
+    @CachePut(value = "author", key = "#id")
+    public AuthorDTO updateAuthorWithBooks(
+            AuthorRequestDTO dto,
+            List<Long> bookIds,
+            Long id) {
+
         Author savedAuthor = authorRepository.findAuthorById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Author" , "AuthorId" , id));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Author", "AuthorId", id));
 
-        savedAuthor.setName(author.getName());
-        savedAuthor.setAge(author.getAge());
 
-        if (savedAuthor.getBooks() != null) {
-            for (Book book : savedAuthor.getBooks()) {
-                book.getAuthors().remove(savedAuthor);
+        savedAuthor.setName(dto.getName());
+        savedAuthor.setAge(dto.getAge());
+        for (Book book : savedAuthor.getBooks()) {
+            book.getAuthors().remove(savedAuthor);
+        }
+        savedAuthor.getBooks().clear();
+        List<Book> newBooks = new ArrayList<>();
+
+        if (bookIds != null && !bookIds.isEmpty()) {
+            newBooks = bookRepository.findAllById(bookIds);
+
+            if (newBooks.size() != bookIds.size()) {
+                throw new RuntimeException("One or more Book IDs are invalid");
             }
         }
-
-        List<Book> newBooks = bookRepository.findAllById(bookIds);
-        if (newBooks.size() != bookIds.size()) {
-            throw new RuntimeException("One or more Book IDs are invalid");
-        }
-
+        savedAuthor.setBooks(newBooks);
         for (Book book : newBooks) {
             book.getAuthors().add(savedAuthor);
         }
+        return modelMapper.map(savedAuthor, AuthorDTO.class);
     }
-    }
+
+
+}

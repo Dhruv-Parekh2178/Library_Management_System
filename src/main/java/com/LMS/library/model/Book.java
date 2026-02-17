@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
-@Where(clause = "is_deleted = false")
+//@Where(clause = "is_deleted = false")
 @Table(name = "book")
 @ToString(exclude = {"authors", "categories", "users"})
 public class Book implements Serializable {
@@ -37,7 +37,7 @@ public class Book implements Serializable {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "authors_id")
     )
-    @JsonIgnoreProperties("books")
+//    @JsonIgnoreProperties("books")
     private List<Author> authors;
 
 
@@ -47,33 +47,26 @@ public class Book implements Serializable {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    @JsonIgnoreProperties("books")
+//    @JsonIgnoreProperties("books")
     private List<Category> categories;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("books")
+//    @JsonIgnoreProperties("books")
     private Publisher publisher;
 
 
     @ManyToMany(mappedBy = "books",fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("books")
+//    @JsonIgnoreProperties("books")
     private List<User> users;
 
-    @Transient
-    private String authorIdsJson;
 
-    @Transient
-    private String categoryIdsJson;
 
-    @Transient
-    private String userIdsJson;
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Book{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                '}';
+//    }
 }

@@ -1,13 +1,18 @@
 package com.LMS.library.controller;
 
 import com.LMS.library.dtos.CategoryDTO;
+import com.LMS.library.dtos.CategoryRequestDTO;
+import com.LMS.library.model.ApiResponse;
 import com.LMS.library.model.Category;
+import com.LMS.library.service.book.BookService;
 import com.LMS.library.service.category.CategoryService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +23,21 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
 
-    @Autowired
     private final CategoryService categoryService;
+    private final BookService bookService;
 
     @GetMapping
     public String getAllCategories(Model model){
-        List<Category> categories = categoryService.getCategories();
+        List<CategoryDTO> categories = categoryService.getCategories();
         model.addAttribute("categories" , categories);
         return "category/category_list";
+    }
+
+    @GetMapping("/data")
+    @ResponseBody
+    public ResponseEntity<ApiResponse<List<CategoryDTO>>> getAllCategoriesData(){
+        List<CategoryDTO> categories = categoryService.getCategories();
+        return ResponseEntity.ok(new ApiResponse<>(true , "success" , categories));
     }
 
     @GetMapping("/get/{id}")
@@ -38,33 +50,36 @@ public class CategoryController {
         return "category/category_by_id";
     }
 
+    @GetMapping("/get/{id}/data")
+    public ResponseEntity<ApiResponse<CategoryDTO>> getCategoryByIdData(@PathVariable Long id){
+        CategoryDTO category = categoryService.getCategoryById(id);
+        if(category==null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false ,"fail" , null));
+
+        return ResponseEntity.ok(new ApiResponse<>(true, "success" , category));
+    }
+
+
     @GetMapping("/add")
     public String showAddCategoryForm(Model model) {
-        model.addAttribute("category", new Category());
+        model.addAttribute("category", new CategoryRequestDTO());
+        model.addAttribute("books", bookService.getbooks());
         return "category/category_form";
     }
 
+
+    @GetMapping("/add/data")
+    @ResponseBody
+    public ResponseEntity<ApiResponse<String>> addCategoryData(Model model) {
+        return ResponseEntity.ok(new ApiResponse<>(true,"success","Category added successfully."));
+    }
+
     @PostMapping("/add")
-    public String addCategory(@Valid @ModelAttribute Category category){
-        List<Long> bookIds = List.of();
+    public String addCategory(@Valid @ModelAttribute CategoryRequestDTO categoryRequestDTO){
 
-        try {
-            if (category.getBookIdsJson() != null &&
-                    !category.getBookIdsJson().isBlank()) {
 
-                ObjectMapper mapper = new ObjectMapper();
-                bookIds = mapper.readValue(
-                        category.getBookIdsJson(),
-                        new TypeReference<List<Long>>() {}
-                );
-            }
+            categoryService.saveCategoryWithBooks(categoryRequestDTO, categoryRequestDTO.getBookIds());
 
-            categoryService.saveCategoryWithBooks(category, bookIds);
-
-        } catch (Exception e) {
-            System.out.println( e.getMessage());
-            e.printStackTrace();
-        }
         return "redirect:/category";
     }
 
@@ -72,31 +87,23 @@ public class CategoryController {
     public String showEditForm(@PathVariable Long id, Model model) {
         CategoryDTO category = categoryService.getCategoryById(id);
         model.addAttribute("category", category);
+        model.addAttribute("books", bookService.getbooks());
         return "category/edit_category";
     }
 
-    @PostMapping("/put/{id}")
-    public String updateCategory(@Valid @ModelAttribute Category category , @PathVariable Long id){
-        List<Long> bookIds = List.of();
-
-        try {
-            if (category.getBookIdsJson() != null &&
-                    !category.getBookIdsJson().isBlank()) {
-
-                ObjectMapper mapper = new ObjectMapper();
-                bookIds = mapper.readValue(
-                        category.getBookIdsJson(),
-                        new TypeReference<List<Long>>() {
-                        }
-                );
-            }
-
-            categoryService.updateCaregoryWithBooks(category, bookIds , id);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+    @GetMapping("/put/{id}/data")
+    @ResponseBody
+    public ResponseEntity<ApiResponse<String>> updateCategoryData(@PathVariable Long id) {
+        CategoryDTO savedCategory = categoryService.getCategoryById(id);
+        if(savedCategory == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","Category with id " + id + " is not found." ));
         }
+        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Category with id " + id + " updated successfully."));
+    }
+
+    @PostMapping("/put/{id}")
+    public String updateCategory(@Valid @ModelAttribute CategoryRequestDTO categoryRequestDTO , @PathVariable Long id){
+            categoryService.updateCaregoryWithBooks(categoryRequestDTO, categoryRequestDTO.getBookIds() , id);
         return "redirect:/category";
     }
 
@@ -104,5 +111,15 @@ public class CategoryController {
     public String deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
         return "redirect:/category";
+    }
+
+    @GetMapping("/delete/{id}/data")
+    @ResponseBody
+    public ResponseEntity<ApiResponse<String>> DeleteAuthor(@PathVariable Long id){
+        CategoryDTO savedCategory = categoryService.getCategoryById(id);
+        if(savedCategory == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, "fail","Category with id " + id + " is not found." ));
+        }
+        return ResponseEntity.ok(new ApiResponse<>(true, "success" ,"Category with id " + id + " deleted successfully."));
     }
 }

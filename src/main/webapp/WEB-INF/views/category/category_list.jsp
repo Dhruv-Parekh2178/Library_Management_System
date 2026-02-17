@@ -42,5 +42,6 @@
 <script src="${pageContext.request.contextPath}/js/auth_interceptor.js"></script>
 <script src="${pageContext.request.contextPath}/js/category/GetCategoryById.js"></script>
 <script src="${pageContext.request.contextPath}/js/category/deleteCategoryById.js"></script>
+<script src="${pageContext.request.contextPath}/js/category/categoryListResponse.js"></script>
 </body>
 </html>

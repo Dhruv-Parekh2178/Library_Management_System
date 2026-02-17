@@ -1,6 +1,7 @@
 package com.LMS.library.service.publisher;
 
 import com.LMS.library.dtos.PublisherDTO;
+import com.LMS.library.dtos.PublisherRequestDTO;
 import com.LMS.library.exception.ResourceNotFoundException;
 import com.LMS.library.model.Book;
 import com.LMS.library.model.Publisher;
@@ -14,6 +15,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,12 +30,13 @@ public class PublisherServiceImpl implements PublisherService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<Publisher> getPublishers() {
+    public List<PublisherDTO> getPublishers() {
 
 
         List<Publisher> publishers = publisherRepository.findAll().stream()
                 .filter(publisher -> !publisher.isDeleted()).toList();
-        return publishers;
+        return publishers.stream()
+                .map(publisher -> modelMapper.map(publisher, PublisherDTO.class)).toList();
     }
 
     @Override
@@ -56,14 +59,21 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     @Transactional
-    public void savePublisherWithBooks(Publisher publisher, List<Long> bookIds) {
-        List<Book> books = bookRepository.findAllById(bookIds);
-        if (books.size() != bookIds.size()) {
-            throw new RuntimeException("One or more Book IDs are invalid");
+    public void savePublisherWithBooks(PublisherRequestDTO dto, List<Long> bookIds) {
+
+        Publisher publisher = new Publisher();
+        publisher.setName(dto.getName());
+
+        List<Book> books = new ArrayList<>();
+
+        if (bookIds != null && !bookIds.isEmpty()) {
+            books = bookRepository.findAllById(bookIds);
+            if (books.size() != bookIds.size()) {
+                throw new RuntimeException("One or more Book IDs are invalid");
+            }
         }
 
         publisherRepository.save(publisher);
-
 
         for (Book book : books) {
             book.setPublisher(publisher);
@@ -72,25 +82,37 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     @Transactional
-    @CachePut(value = "publisher" , key = "#id")
-    public void updatePublisherWithBooks(Publisher publisher, List<Long> bookIds, Long id) {
-        Publisher savedPublisher = publisherRepository.findPublisherById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Publisher" ,"PublisherId" , id));
-        savedPublisher.setName(publisher.getName());
+    @CachePut(value = "publisher", key = "#id")
+    public PublisherDTO updatePublisherWithBooks(PublisherRequestDTO dto, List<Long> bookIds, Long id) {
 
-        if (savedPublisher.getBooks() != null) {
-            for (Book book : savedPublisher.getBooks()) {
-                book.setPublisher(null);
-            }
+        Publisher savedPublisher = publisherRepository.findPublisherById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Publisher", "PublisherId", id));
+
+        savedPublisher.setName(dto.getName());
+
+        for (Book book : savedPublisher.getBooks()) {
+            book.setPublisher(null);
         }
 
-        List<Book> newBooks = bookRepository.findAllById(bookIds);
-        if (newBooks.size() != bookIds.size()) {
-            throw new RuntimeException("One or more Book IDs are invalid");
+        savedPublisher.getBooks().clear();
+
+        List<Book> newBooks = new ArrayList<>();
+
+        if (bookIds != null && !bookIds.isEmpty()) {
+            newBooks = bookRepository.findAllById(bookIds);
+            if (newBooks.size() != bookIds.size()) {
+                throw new RuntimeException("One or more Book IDs are invalid");
+            }
         }
 
         for (Book book : newBooks) {
             book.setPublisher(savedPublisher);
         }
+
+        savedPublisher.setBooks(newBooks);
+
+        return modelMapper.map(savedPublisher, PublisherDTO.class);
     }
+
 }
